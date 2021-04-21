@@ -3,6 +3,10 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+require('dotenv').config();
+const client = require('./db.js');
+
+
 
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
 const notFoundHandler = require('./error-handlers/404.js');
@@ -50,13 +54,27 @@ app.get('/auth/google/callback',
   });
 
 app.use(authRoutes);
+app.get('/courses', getAllCourses);
 app.use('*', notFoundHandler);
 app.use(errorHandler);
 
+
+
+function getAllCourses(req, res) {
+  let SQL = `SELECT * FROM courses;`;
+  client.query(SQL).then(result => {
+    res.send(result.rows);
+    // console.log(result);
+  })
+    .catch(e => { console.log('home error') });
+}
+
 module.exports = {
-  server: app,
+  app: app,
   start: (port) => {
     const PORT = port || 8080;
     app.listen(PORT, () => console.log(`Server Up on ${PORT}`));
   },
 };
+
+
