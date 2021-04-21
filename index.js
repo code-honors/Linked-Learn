@@ -1,5 +1,6 @@
 'use strict';
 
+
 require('dotenv').config();
 const { app } = require('./src/server.js');
 const client = require('./src/db.js');
@@ -19,6 +20,7 @@ const client = require('./src/db.js');
 //       console.log('__CONNECTION ERROR__', e.message);
 //     });
 // Start the web server
+
 const server = require('./src/server.js');
 
 client.connect()
