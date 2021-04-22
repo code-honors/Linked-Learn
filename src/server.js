@@ -6,8 +6,6 @@ const morgan = require('morgan');
 require('dotenv').config();
 const client = require('./db.js');
 
-
-
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
 const notFoundHandler = require('./error-handlers/404.js');
 const errorHandler = require('./error-handlers/500.js');
@@ -18,12 +16,10 @@ const app = express();
 const SECRET = process.env.SECRET;
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 
-
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 
 passport.use(new GoogleStrategy({
   clientID: GOOGLE_CLIENT_ID,
@@ -57,8 +53,6 @@ app.use(authRoutes);
 app.get('/courses', getAllCourses);
 app.use('*', notFoundHandler);
 app.use(errorHandler);
-
-
 
 function getAllCourses(req, res) {
   let SQL = `SELECT * FROM courses;`;
