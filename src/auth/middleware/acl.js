@@ -1,11 +1,11 @@
 'use strict';
 
-module.exports = () => {
+module.exports = (role) => {
 
   return (req, res, next) => {
 
     try {
-      if (req.user.role === 'admin') {
+      if (req.user.role === role) {
         next();
       }
       else {
