@@ -1,11 +1,11 @@
 'use strict';
 
-module.exports = (capability) => {
+module.exports = () => {
 
   return (req, res, next) => {
 
     try {
-      if (req.user.capabilities.includes(capability)) {
+      if (req.user.role === 'admin') {
         next();
       }
       else {
