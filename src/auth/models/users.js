@@ -11,29 +11,12 @@ class User {
     this.password = obj.password,
     this.email = obj.email,
     this.role = obj.role
-    this.token = generateToken();
+    this.token = 0;
   }
-
-
-
-  // capabilities(){
-  //   let acl = {
-  //     student: ['read'],
-  //     teacher: ['read', 'create', 'update'],
-  //     admin: ['read', 'create', 'update', 'delete']
-  //   };
-  //   return acl[this.role];
-  // }
 
 }
 
-function generateToken(){
-  let tokenObject = {
-    username: this.username,
-  }
-  let token = jwt.sign(tokenObject, process.env.SECRET);
-  return token;
-}
+
 
 async function authenticateBasic(username, password) {
   const SQL = `SELECT * FROM auth WHERE username=$1;`;
@@ -43,16 +26,25 @@ async function authenticateBasic(username, password) {
   if (valid) { return user.rows[0]; }
   throw new Error('Invalid User');
 }
+
 async function authenticateWithToken(token) {
   try {
     const parsedToken = jwt.verify(token, process.env.SECRET);
     const SQL = `SELECT * FROM auth WHERE username=$1;`;
-    const user = client.query(SQL, [parsedToken.username]);
-    if (user) { return user.rows[0]; }
+    const user = await client.query(SQL, [parsedToken.username]);
+    if (user.rows.length > 0) { return user.rows[0]; }
     throw new Error("User Not Found");
   } catch (e) {
     throw new Error(e.message)
   }
+}
+
+function generateToken(username){
+  let tokenObject = {
+    username,
+  }
+  let token = jwt.sign(tokenObject, process.env.SECRET);
+  return token;
 }
 
 module.exports = {User, authenticateBasic, authenticateWithToken, generateToken};
