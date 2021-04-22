@@ -17,12 +17,13 @@ const passport = require('passport');
 const app = express();
 const SECRET = process.env.SECRET;
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
-
+const studentRoutes = require("./routes/students.routes");
 
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use("/students", studentRoutes);
 
 
 passport.use(new GoogleStrategy({
