@@ -9,7 +9,10 @@ CREATE TABLE IF NOT EXISTS auth(
     email VARCHAR (255) UNIQUE NOT NULL,
     role roles DEFAULT 'student'
 );
-
+INSERT INTO auth (username, password, email, role) values ('afnan', '123456', 'afnan@gm.com', 'admin') RETURNING *;
+INSERT INTO auth (username, password, email, role) values ('ruba', '123456', 'ruba@gm.com', 'teacher') RETURNING *;
+INSERT INTO auth (username, password, email, role) values ('zaid', '123456', 'zaid@gm.com', 'student') RETURNING *;
+SELECT * FROM auth;
 DROP TABLE IF EXISTS students CASCADE;
 
 CREATE TABLE IF NOT EXISTS  students(
@@ -18,6 +21,9 @@ CREATE TABLE IF NOT EXISTS  students(
     lastname VARCHAR (255) NOT NULL,
     auth_id INT REFERENCES auth(id)
 );
+
+INSERT INTO students (firstname, lastname, auth_id) values ('zaid', 'alasfar', 3) RETURNING *;
+SELECT students.firstname, auth.role FROM students JOIN auth ON students.auth_id = auth.id;
 
 DROP TABLE IF EXISTS teachers CASCADE;
 
@@ -28,6 +34,8 @@ CREATE TABLE IF NOT EXISTS  teachers(
     auth_id INT REFERENCES auth(id) 
 );
 
+INSERT INTO teachers (firstname, lastname, auth_id) values ('ruba', 'banat', 2) RETURNING *;
+SELECT teachers.firstname, auth.role FROM teachers JOIN auth ON teachers.auth_id = auth.id;
 
 DROP TABLE IF EXISTS courses CASCADE;
 
@@ -40,7 +48,8 @@ CREATE TABLE IF NOT EXISTS  courses(
 );
 
 INSERT INTO courses (name,description,classes,category) values ('Cal','asddqweqweqwe','qweqweqwe','math');
-
+INSERT INTO courses (name,description,classes,category) values ('401','asddqweqweqwe','qweqweqwe','code');
+INSERT INTO courses (name,description,classes,category) values ('301','asddqweqweqwe','qweqweqwe','code');
 
 DROP TABLE IF EXISTS students_courses;
 
@@ -50,6 +59,10 @@ CREATE TABLE IF NOT EXISTS  students_courses(
     course_id INT REFERENCES courses(id)
 );
 
+INSERT INTO students_courses (student_id, course_id) values (1, 1) RETURNING *;
+INSERT INTO students_courses (student_id, course_id) values (1, 2) RETURNING *;
+SELECT * FROM students_courses JOIN students ON students_courses.student_id = students.id JOIN courses ON students_courses.course_id = courses.id;
+
 DROP TABLE IF EXISTS teachers_courses;
 
 CREATE TABLE IF NOT EXISTS  teachers_courses(
@@ -58,3 +71,6 @@ CREATE TABLE IF NOT EXISTS  teachers_courses(
     course_id INT REFERENCES courses(id)
 );
 
+INSERT INTO teachers_courses (teacher_id, course_id) values (1, 2) RETURNING *;
+INSERT INTO teachers_courses (teacher_id, course_id) values (1, 3) RETURNING *;
+SELECT * FROM teachers_courses JOIN teachers ON teachers_courses.teacher_id = teachers.id JOIN courses ON teachers_courses.course_id = courses.id;
