@@ -1,15 +1,16 @@
-DROP TABLE IF EXISTS auth;
+DROP TABLE IF EXISTS auth CASCADE;
+
+CREATE TYPE roles AS enum('admin', 'teacher', 'student');
 
 CREATE TABLE IF NOT EXISTS auth(
-    id SERIAL PRIMARY KEY ,
-    username VARCHAR (255) NOT NULL,
+    id SERIAL PRIMARY KEY,
+    username VARCHAR (255) UNIQUE NOT NULL,
     password VARCHAR (255) NOT NULL,
-    email VARCHAR (255) NOT NULL,
-    role VARCHAR (255) NOT NULL
+    email VARCHAR (255) UNIQUE NOT NULL,
+    role roles DEFAULT 'student'
 );
 
-
-DROP TABLE IF EXISTS students;
+DROP TABLE IF EXISTS students CASCADE;
 
 CREATE TABLE IF NOT EXISTS  students(
     id SERIAL PRIMARY KEY ,
@@ -18,7 +19,7 @@ CREATE TABLE IF NOT EXISTS  students(
     auth_id INT REFERENCES auth(id)
 );
 
-DROP TABLE IF EXISTS teachers;
+DROP TABLE IF EXISTS teachers CASCADE;
 
 CREATE TABLE IF NOT EXISTS  teachers(
     id SERIAL PRIMARY KEY ,
@@ -28,7 +29,7 @@ CREATE TABLE IF NOT EXISTS  teachers(
 );
 
 
-DROP TABLE IF EXISTS courses;
+DROP TABLE IF EXISTS courses CASCADE;
 
 CREATE TABLE IF NOT EXISTS  courses(
     id SERIAL PRIMARY KEY ,
