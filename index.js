@@ -27,5 +27,5 @@ client.connect()
   .then(() => {
     server.start(process.env.PORT);
   })
-  .catch(e => { console.log('connection error') });
+  .catch(e => { console.log('connection error', e) });
 
