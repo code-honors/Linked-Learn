@@ -10,6 +10,7 @@ var GoogleStrategy = require('passport-google-oauth20').Strategy;
 const notFoundHandler = require('./error-handlers/404.js');
 const errorHandler = require('./error-handlers/500.js');
 const authRoutes = require('./auth/routes.js');
+// const routes = require('./routs/raouts.js');
 const passport = require('passport');
 
 const app = express();
@@ -50,6 +51,7 @@ app.get('/auth/google/callback',
   });
 
 app.use(authRoutes);
+// app.use(routes);
 app.get('/courses', getAllCourses);
 app.use('*', notFoundHandler);
 app.use(errorHandler);

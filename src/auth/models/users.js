@@ -1,56 +1,50 @@
 'use strict';
 
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const client = require('../../db.js');
 
-const users = new mongoose.Schema({
-  username: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  role: { type: String, required: true, default: 'user', enum: ['user', 'editor', 'admin'] },
-});
-
-users.virtual('token').get(function () {
-  let tokenObject = {
-    username: this.username,
+class User {
+  constructor(obj){
+    this.username = obj.username,
+    this.password = obj.password,
+    this.email = obj.email,
+    this.role = obj.role
+    this.token = 0;
   }
-  return jwt.sign(tokenObject, process.env.SECRET)
-});
 
-users.virtual('capabilities').get(function () {
-  let acl = {
-    user: ['read'],
-    editor: ['read', 'create', 'update'],
-    admin: ['read', 'create', 'update', 'delete']
-  };
-  return acl[this.role];
-});
+}
 
-users.pre('save', async function () {
-  if (this.isModified('password')) {
-    this.password = await bcrypt.hash(this.password, 10);
-  }
-});
 
-// BASIC AUTH
-users.statics.authenticateBasic = async function (username, password) {
-  const user = await this.findOne({ username })
-  const valid = await bcrypt.compare(password, user.password)
-  if (valid) { return user; }
+
+async function authenticateBasic(username, password) {
+  const SQL = `SELECT * FROM auth WHERE username=$1;`;
+  const user = await client.query(SQL, [username]);
+  console.log(user.rows[0]);
+  const valid = await bcrypt.compare(password, user.rows[0].password)
+  if (valid) { return user.rows[0]; }
   throw new Error('Invalid User');
 }
 
-// BEARER AUTH
-users.statics.authenticateWithToken = async function (token) {
+async function authenticateWithToken(token) {
   try {
     const parsedToken = jwt.verify(token, process.env.SECRET);
-    const user = this.findOne({ username: parsedToken.username })
-    if (user) { return user; }
+    const SQL = `SELECT * FROM auth WHERE username=$1;`;
+    const user = await client.query(SQL, [parsedToken.username]);
+    if (user.rows.length > 0) { return user.rows[0]; }
     throw new Error("User Not Found");
   } catch (e) {
     throw new Error(e.message)
   }
 }
 
+function generateToken(username){
+  let tokenObject = {
+    username,
+  }
+  let token = jwt.sign(tokenObject, process.env.SECRET);
+  return token;
+}
 
-module.exports = mongoose.model('users', users);
+module.exports = {User, authenticateBasic, authenticateWithToken, generateToken};
