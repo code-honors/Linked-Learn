@@ -24,7 +24,7 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/students", studentRoutes);
+app.use("/student", studentRoutes);
 
 
 passport.use(new GoogleStrategy({

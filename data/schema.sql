@@ -19,10 +19,12 @@ CREATE TABLE IF NOT EXISTS  students(
     id SERIAL PRIMARY KEY ,
     firstname VARCHAR (255) NOT NULL,
     lastname VARCHAR (255) NOT NULL,
+    profilepic VARCHAR(255) DEFAULT 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Crystal_Clear_kdm_user_female.svg/1200px-Crystal_Clear_kdm_user_female.svg.png',
+    interest VARCHAR(255),
     auth_id INT REFERENCES auth(id)
 );
 
-INSERT INTO students (firstname, lastname, auth_id) values ('zaid', 'alasfar', 3) RETURNING *;
+INSERT INTO students (firstname, lastname, profilepic, interest, auth_id) values ('zaid', 'alasfar','https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Crystal_Clear_kdm_user_female.svg/1200px-Crystal_Clear_kdm_user_female.svg.png','code' ,3) RETURNING *;
 SELECT students.firstname, auth.role FROM students JOIN auth ON students.auth_id = auth.id;
 
 DROP TABLE IF EXISTS teachers CASCADE;
