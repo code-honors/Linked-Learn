@@ -27,7 +27,8 @@ authRouter.post('/signin', basicAuth, (req, res, next) => {
     user: req.user,
     token: req.user.token
   };
-  res.status(200).json(user);
+  console.log('===========================',user.user);
+  res.status(200).redirect(`/${user.role}/${user.id}`);
 });
 
 authRouter.get('/users', bearerAuth, permissions('delete'), async (req, res, next) => {
