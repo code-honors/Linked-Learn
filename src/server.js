@@ -19,12 +19,15 @@ const app = express();
 const SECRET = process.env.SECRET;
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const studentRoutes = require("./routes/students.routes");
+const teacherRoutes = require('./routes/teachers.js');
+
 
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/student", studentRoutes);
+app.use("/teacher", teacherRoutes);
 
 
 passport.use(new GoogleStrategy({
@@ -55,7 +58,7 @@ app.get('/auth/google/callback',
     res.redirect('/');
   });
 
-app.use(authRoutes);
+app.use('/auth', authRoutes);
 // app.use(routes);
 app.get('/courses', getAllCourses);
 app.use('*', notFoundHandler);

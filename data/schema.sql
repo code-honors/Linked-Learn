@@ -33,6 +33,7 @@ CREATE TABLE IF NOT EXISTS  teachers(
     id SERIAL PRIMARY KEY ,
     firstname VARCHAR (255) NOT NULL,
     lastname VARCHAR (255) NOT NULL,
+    profilepic VARCHAR(255) DEFAULT 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Crystal_Clear_kdm_user_female.svg/1200px-Crystal_Clear_kdm_user_female.svg.png',
     auth_id INT REFERENCES auth(id) 
 );
 
@@ -58,7 +59,7 @@ DROP TABLE IF EXISTS students_courses;
 CREATE TABLE IF NOT EXISTS  students_courses(
     id SERIAL PRIMARY KEY ,
     student_id INT REFERENCES students(id),
-    course_id INT REFERENCES courses(id)
+    course_id INT REFERENCES courses(id) ON DELETE CASCADE
 );
 
 INSERT INTO students_courses (student_id, course_id) values (1, 1) RETURNING *;
@@ -70,7 +71,7 @@ DROP TABLE IF EXISTS teachers_courses;
 CREATE TABLE IF NOT EXISTS  teachers_courses(
     id SERIAL PRIMARY KEY ,
     teacher_id INT REFERENCES teachers(id),
-    course_id INT REFERENCES courses(id)
+    course_id INT REFERENCES courses(id) ON DELETE CASCADE
 );
 
 INSERT INTO teachers_courses (teacher_id, course_id) values (1, 2) RETURNING *;
