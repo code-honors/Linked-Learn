@@ -6,7 +6,7 @@ const morgan = require('morgan');
 require('dotenv').config();
 const client = require('./db.js');
 const methodOverride = require('method-override');
-
+const superagent = require('superagent')
 
 
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
@@ -49,16 +49,28 @@ passport.use(new GoogleStrategy({
 ));
 
 app.get('/', (req, res) => {
-  res.render('pages/home');
+  res.render('pages/index');
 });
 
-app.get('/signup', (req,res)=>{
+app.get('/signup', (req, res) => {
   res.render('pages/signup')
 })
-app.get('/signin', (req,res)=>{
+app.get('/signin', (req, res) => {
   res.render('pages/signin')
 })
 // app.get()
+
+// app.get('/home', (req,res)=>{
+//   res.render('pages/home')
+// })
+app.get('/courses', async (req, res, next) => {
+  try {
+    let results = await client.query(`SELECT * FROM courses ORDER BY name;`);
+    res.render('pages/home', { data: results.rows })
+  } catch (error) {
+    next(error)
+  }
+})
 
 app.get('/auth/google',
   passport.authenticate('google', { scope: ['profile'] }));
@@ -77,15 +89,28 @@ app.use('*', notFoundHandler);
 app.use(errorHandler);
 
 
+app.get('/courses', getAllCourses)
+async function getAllCourses(req, res, next) {
+  try {
+    let SQL = await client.query(`SELECT * FROM courses;`);
+    // let {category} = req.query;
+    // client.query(SQL ,value ).then( (resultDataBase) =>{
+    // let URL = `http://localhost:3000/courses?category=${category}`;
+    // console.log(URL);
+    // superagent.get(URL)
+    // .then(resultApi =>{
+    //   let courseData = resultApi.body.map(item =>{
+    //     return new Courses(item);
+    //   })
 
-function getAllCourses(req, res) {
-  let SQL = `SELECT * FROM courses;`;
-  client.query(SQL).then(result => {
-    res.send(result.rows);
-    // console.log(result);
-  })
-    .catch(e => { console.log('home error') });
+    res.send('pages/home', { SQL: courseData })
+  } catch (err) {
+    next(err);
+  }
+
 }
+
+
 
 module.exports = {
   app: app,

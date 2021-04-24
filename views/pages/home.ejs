@@ -7,9 +7,24 @@
     <title>Document</title>
 </head>
 <body>
+
+    <% data.forEach(element=>{%>
+    <div>
+
+        <h2> <%= element.name %> </h2>
+        <p><%= element.description %> </p>
+        <p><%= element.classes %>  </p>
+        <p><%= element.category %>  </p>
+        
+    </div>
+    <%}) %>
+    
     <section>
-        <a href="/signup">Join Now</a>
-       
+        <h2>Search Courses</h2>
+        <form action="/courses" method="GET">
+            <input type="text" placeholder="Course ... " id="search_input" name="category" required>
+            <button  type="submit" id="search-button">Search</button>
+        </form>
     </section>
 </body>
 </html>
