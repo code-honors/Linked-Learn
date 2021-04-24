@@ -16,6 +16,11 @@
         <h2> <%= element.name %> </h2>
         <p><%= element.description %> </p>
         <p><%= element.classes %>  </p>
+
+        <form action="/student/courses" method="POST">
+            <input hidden type="text" name="course_id" id="course_id" value="<%= element.id %> ">
+            <button type="submit"> Add to my courses</button>
+        </form>
         
     </a>
     </li>
