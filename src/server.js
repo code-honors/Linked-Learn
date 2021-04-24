@@ -5,6 +5,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 require('dotenv').config();
 const client = require('./db.js');
+const methodOverride = require('method-override');
 
 
 
@@ -22,12 +23,17 @@ const studentRoutes = require("./routes/students.routes");
 const teacherRoutes = require('./routes/teachers.js');
 
 
+
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
+app.set('view engine', 'ejs');
+app.use(express.static("./public"));
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
 app.use("/student", studentRoutes);
 app.use("/teacher", teacherRoutes);
+
 
 
 passport.use(new GoogleStrategy({
@@ -43,9 +49,15 @@ passport.use(new GoogleStrategy({
 ));
 
 app.get('/', (req, res) => {
-  res.send('home');
+  res.render('pages/home');
 });
 
+app.get('/signup', (req,res)=>{
+  res.render('pages/signup')
+})
+app.get('/signin', (req,res)=>{
+  res.render('pages/signin')
+})
 // app.get()
 
 app.get('/auth/google',

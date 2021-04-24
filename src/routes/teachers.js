@@ -14,7 +14,8 @@ router.delete("/courses/:id", deleteCorses);
 async function profileHandler(req, res, next) {
     try {
         const results = await client.query("SELECT teachers.*, auth.role FROM teachers JOIN auth ON teachers.auth_id = auth.id;");
-        res.json(results.rows);
+        // res.json(results.rows);
+        res.render('pages/teacherProfile', { element :results.rows[0]});
     } catch (err) {
         next(err);
     }
