@@ -8,33 +8,29 @@
 </head>
 <body>
 <h1> OUR COURSES</h1>
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for course.." title="Type in a name">
+<ul id="myUL">
     <% data.forEach(element=>{%>
-    <div>
+    <li > <a href="#">
 
         <h2> <%= element.name %> </h2>
         <p><%= element.description %> </p>
         <p><%= element.classes %>  </p>
         
-        
-    </div>
+    </a>
+    </li>
     <%}) %>
+</ul>
+
     <h2>Categories</h2>
 
-<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for course.." title="Type in a name">
+<ul >
 
-<ul id="myUL">
     <% data.forEach(element=>{%>
   <li ><a  href="#"><%= element.category %> </a></li>
   <%}) %>
 </ul>
 
-    <!-- <section>
-        <h2>Search Courses</h2>
-        <form action="/courses" method="GET">
-            <input type="text" placeholder="Course ... " id="search_input" name="category" required>
-            <button  type="submit" id="search-button">Search</button>
-        </form>
-    </section> -->
     <script>
         function myFunction() {
             var input, filter, ul, li, a, i, txtValue;
