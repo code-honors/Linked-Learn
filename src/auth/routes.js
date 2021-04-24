@@ -3,26 +3,31 @@
 const express = require('express');
 const authRouter = express.Router();
 const bcrypt = require('bcrypt');
-const {User} = require('./models/users.js');
+const {User, generateToken} = require('./models/users.js');
 const basicAuth = require('./middleware/basic.js');
 const bearerAuth = require('./middleware/bearer.js');
-const permissions = require('./middleware/acl.js')
+const permissions = require('./middleware/acl.js');
 const client = require('../db.js');
 
 authRouter.post('/signup', signupFunction);
 
 authRouter.post('/signin', basicAuth, signinFunction);
 
-authRouter.get('/users', bearerAuth, permissions, async (req, res, next) => {
-  let SQL = `SELECT * FROM auth;`
+authRouter.get('/users', bearerAuth, permissions('admin'), async (req, res, next) => {
+  let SQL = `SELECT * FROM auth;`;
   const users = await client.query(SQL);
-  const list = users.map((user) => user.username);
+  const list = users.rows.map((user) => user.role);
   res.status(200).json(list);
 });
 
-authRouter.get('/secret', bearerAuth, async (req, res, next) => {
-  res.status(200).send('Welcome to the secret area');
+authRouter.get('/teacher', bearerAuth, permissions('teacher'), async (req, res, next) => {
+  res.status(200).send('Welcome to the teachers area');
 });
+
+authRouter.get('/student', bearerAuth, permissions('student'), async (req, res, next) => {
+  res.status(200).send('Welcome to the students area');
+});
+
 
 module.exports = authRouter;
 
@@ -41,13 +46,13 @@ async function signupFunction (req, res, next) {
         let userObj = req.body;
         userObj.password = hashedPassword;
         let user = await new User(userObj);
-        let { username, password, email, role } = user;
+        let { username, password, email, role, token } = user;
         const SQL2 = `INSERT INTO auth (username, password, email, role) values ($1, $2, $3, $4) RETURNING *;`;
         let values = [username, password, email, role];
         const userRecord = await client.query(SQL2, values);
         const output = {
           user: userRecord.rows[0],
-          token: user.token,
+          token: generateToken(userRecord.rows[0].username),
         };
         res.status(201).json(output);
       } else {
@@ -59,6 +64,7 @@ async function signupFunction (req, res, next) {
       res.send(`username ${output} already exists, sign in instead`);
     }
   } catch (e) {
+    console.log(e);
     next(e.message);
   }
 }
@@ -66,8 +72,7 @@ async function signupFunction (req, res, next) {
 function signinFunction(req, res, next) {
   const user = {
     user: req.user,
-    token: User.generateToken(),
+    token: generateToken(req.user.username),
   };
   res.status(200).json(user);
-  
 }
