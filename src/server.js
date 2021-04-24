@@ -58,19 +58,15 @@ app.get('/signup', (req, res) => {
 app.get('/signin', (req, res) => {
   res.render('pages/signin')
 })
-// app.get()
-
-// app.get('/home', (req,res)=>{
-//   res.render('pages/home')
-// })
-app.get('/courses', async (req, res, next) => {
+app.get('/courses', getAllCourses)
+ async function getAllCourses (req, res, next)  {
   try {
     let results = await client.query(`SELECT * FROM courses ORDER BY name;`);
     res.render('pages/home', { data: results.rows })
   } catch (error) {
     next(error)
   }
-})
+}
 
 app.get('/auth/google',
   passport.authenticate('google', { scope: ['profile'] }));
@@ -87,29 +83,6 @@ app.use('/auth', authRoutes);
 app.get('/courses', getAllCourses);
 app.use('*', notFoundHandler);
 app.use(errorHandler);
-
-
-app.get('/courses', getAllCourses)
-async function getAllCourses(req, res, next) {
-  try {
-    let SQL = await client.query(`SELECT * FROM courses;`);
-    // let {category} = req.query;
-    // client.query(SQL ,value ).then( (resultDataBase) =>{
-    // let URL = `http://localhost:3000/courses?category=${category}`;
-    // console.log(URL);
-    // superagent.get(URL)
-    // .then(resultApi =>{
-    //   let courseData = resultApi.body.map(item =>{
-    //     return new Courses(item);
-    //   })
-
-    res.send('pages/home', { SQL: courseData })
-  } catch (err) {
-    next(err);
-  }
-
-}
-
 
 
 module.exports = {
