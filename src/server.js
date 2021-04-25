@@ -48,7 +48,7 @@ io.on('connection', (socket) => {
   socket.on('create', function(room) {
     socket.join(room);
   });
-  
+
   socket.on('new message', (data) => {
     socket.broadcast.emit('new message', {
       username: socket.username,
@@ -109,9 +109,10 @@ passport.use(new GoogleStrategy({
   }
 ));
 
-// app.get('/', (req, res) => {
-//   res.send('home');
-// });
+app.get('/', (req, res) => {
+    res.send('home');
+});
+
 
 // app.get()
 
