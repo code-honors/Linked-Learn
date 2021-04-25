@@ -16,9 +16,4 @@ describe('==================SERVER==================', () => {
         const response = await request.get('/whatever');
         expect(response.status).toEqual(404);
       });
-      it('handle bad method', async () => {
-        const response = await request.post('/*');
-        // expect(response.request.method).toBe('POST');
-        expect(response.status).toEqual(404);
-      });
 });

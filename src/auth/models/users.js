@@ -19,7 +19,7 @@ class User {
 async function authenticateBasic(username, password) {
   const SQL = `SELECT * FROM auth WHERE username=$1;`;
   const user = await client.query(SQL, [username]);
-  console.log(user.rows[0]);
+  // console.log(user.rows[0]);
   const valid = await bcrypt.compare(password, user.rows[0].password)
   if (valid) { return user.rows[0]; }
   throw new Error('Invalid User');
