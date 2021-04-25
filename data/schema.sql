@@ -7,11 +7,11 @@ CREATE TABLE IF NOT EXISTS auth(
     username VARCHAR (255) UNIQUE NOT NULL,
     password VARCHAR (255) NOT NULL,
     email VARCHAR (255) UNIQUE NOT NULL,
-    role roles DEFAULT 'student'
+    role roles DEFAULT 'student' NOT NULL
 );
-INSERT INTO auth (username, password, email, role) values ('afnan', '123456', 'afnan@gm.com', 'admin') RETURNING *;
-INSERT INTO auth (username, password, email, role) values ('ruba', '123456', 'ruba@gm.com', 'teacher') RETURNING *;
-INSERT INTO auth (username, password, email, role) values ('zaid', '123456', 'zaid@gm.com', 'student') RETURNING *;
+INSERT INTO auth (username, password, email, role) values ('afnan', '$2b$10$bU2t0RLijsvFs6hdfCDqT.HSFXCw2i.cjvILr6.mVxvn3Q587Rz8e', 'afnan@gm.com', 'admin') RETURNING *;
+INSERT INTO auth (username, password, email, role) values ('ruba', '$2b$10$bU2t0RLijsvFs6hdfCDqT.HSFXCw2i.cjvILr6.mVxvn3Q587Rz8e', 'ruba@gm.com', 'teacher') RETURNING *;
+INSERT INTO auth (username, password, email, role) values ('zaid', '$2b$10$bU2t0RLijsvFs6hdfCDqT.HSFXCw2i.cjvILr6.mVxvn3Q587Rz8e', 'zaid@gm.com', 'student') RETURNING *;
 SELECT * FROM auth;
 DROP TABLE IF EXISTS students CASCADE;
 

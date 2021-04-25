@@ -10,13 +10,11 @@ class User {
     this.username = obj.username,
     this.password = obj.password,
     this.email = obj.email,
-    this.role = obj.role
+    this.role = obj.role || 'student',
     this.token = 0;
   }
 
 }
-
-
 
 async function authenticateBasic(username, password) {
   const SQL = `SELECT * FROM auth WHERE username=$1;`;
@@ -40,10 +38,7 @@ async function authenticateWithToken(token) {
 }
 
 function generateToken(username){
-  let tokenObject = {
-    username,
-  }
-  let token = jwt.sign(tokenObject, process.env.SECRET);
+  let token = jwt.sign({username}, process.env.SECRET);
   return token;
 }
 
