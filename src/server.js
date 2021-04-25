@@ -26,6 +26,77 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
+
+
+/////////////////////////////////////////
+const path = require('path');
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+
+app.use(express.static(path.join(__dirname, 'public')));
+app.get('/chat', function(req, res){
+    res.sendFile(path.join(__dirname, 'public/chat'));
+});
+
+
+
+let numUsers = 0;
+
+io.on('connection', (socket) => {
+  let addedUser = false;
+
+  socket.on('create', function(room) {
+    socket.join(room);
+  });
+  
+  socket.on('new message', (data) => {
+    socket.broadcast.emit('new message', {
+      username: socket.username,
+      message: data
+    });
+  });
+
+  socket.on('add user', (username) => {
+    if (addedUser) return;
+
+    socket.username = username;
+    ++numUsers;
+    addedUser = true;
+    socket.emit('login', {
+      numUsers: numUsers
+    });
+    socket.broadcast.emit('user joined', {
+      username: socket.username,
+      numUsers: numUsers
+    });
+  });
+
+  socket.on('typing', () => {
+    socket.broadcast.emit('typing', {
+      username: socket.username
+    });
+  });
+
+  socket.on('stop typing', () => {
+    socket.broadcast.emit('stop typing', {
+      username: socket.username
+    });
+  });
+
+  socket.on('disconnect', () => {
+    if (addedUser) {
+      --numUsers;
+
+      socket.broadcast.emit('user left', {
+        username: socket.username,
+        numUsers: numUsers
+      });
+    }
+  });
+});
+
+//////////////////////////////////////////
+
 passport.use(new GoogleStrategy({
   clientID: GOOGLE_CLIENT_ID,
   clientSecret: SECRET,
@@ -38,9 +109,9 @@ passport.use(new GoogleStrategy({
   }
 ));
 
-app.get('/', (req, res) => {
-  res.send('home');
-});
+// app.get('/', (req, res) => {
+//   res.send('home');
+// });
 
 // app.get()
 
@@ -75,7 +146,7 @@ module.exports = {
   app: app,
   start: (port) => {
     const PORT = port || 8080;
-    app.listen(PORT, () => console.log(`Server Up on ${PORT}`));
+    server.listen(PORT, () => console.log(`Server Up on ${PORT}`));
   },
 };
 
