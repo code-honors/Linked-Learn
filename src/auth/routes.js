@@ -9,6 +9,13 @@ const bearerAuth = require('./middleware/bearer.js');
 const permissions = require('./middleware/acl.js');
 const client = require('../db.js');
 
+
+authRouter.get('/signup', (req, res) => {
+  res.render('pages/signup');
+});
+authRouter.get('/signin', (req, res) => {
+  res.render('pages/signin');
+});
 authRouter.post('/signup', signupFunction);
 
 authRouter.post('/signin', basicAuth, signinFunction);
@@ -28,10 +35,7 @@ authRouter.get('/student', bearerAuth, permissions('student'), async (req, res, 
   res.status(200).send('Welcome to the students area');
 });
 
-
 module.exports = authRouter;
-
-
 
 async function signupFunction (req, res, next) {
   try {
@@ -75,4 +79,5 @@ function signinFunction(req, res, next) {
     token: generateToken(req.user.username),
   };
   res.status(200).json(user);
+  next();
 }
