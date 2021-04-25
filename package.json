@@ -8,13 +8,16 @@
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
+    "ejs": "^3.1.6",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "method-override": "^3.0.0",
     "mongoose": "^5.12.5",
     "morgan": "^1.10.0",
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
-    "pg": "^8.6.0"
+    "pg": "^8.6.0",
+    "superagent": "^6.1.0"
   },
   "devDependencies": {},
   "scripts": {
@@ -31,5 +34,4 @@
     "url": "https://github.com/code-honors/Linked-Learn/issues"
   },
   "homepage": "https://github.com/code-honors/Linked-Learn#readme"
-
 }

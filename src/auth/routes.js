@@ -75,4 +75,5 @@ function signinFunction(req, res, next) {
     token: generateToken(req.user.username),
   };
   res.status(200).json(user);
+  next();
 }

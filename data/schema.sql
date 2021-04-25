@@ -53,9 +53,11 @@ CREATE TABLE IF NOT EXISTS  courses(
     classes TEXT
 );
 
+
 INSERT INTO courses (name,description,category,classes) values ('Cal','asddqweqweqwe','math', 'Class 1:');
 INSERT INTO courses (name,description,category,classes) values ('401','asddqweqweqwe','code', 'Class 1:');
 INSERT INTO courses (name,description,category,classes) values ('301','asddqweqweqwe','code', 'Class 1:');
+
 
 DROP TABLE IF EXISTS students_courses;
 
