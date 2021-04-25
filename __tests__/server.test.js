@@ -1,7 +1,7 @@
 'use strict';
 
 const pg = require('pg');
-const client = new pg.Client("postgres://bashar:9971011997@localhost:5432/linkedlearntest");
+const client = new pg.Client("postgres://rubabanat:0000@localhost:5432/linkedlearntest");
 const superTest = require('supertest');
 const {app} = require('../src/server');
 const request = superTest(app);
