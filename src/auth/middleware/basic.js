@@ -6,7 +6,7 @@ const User = require('../models/users.js');
 module.exports = async (req, res, next) => {
 
   if (!req.headers.authorization) { return _authError(); }
-
+// 'Basic yuilfajleaifhoai=' -> username:password
   let basic = req.headers.authorization.split(' ').pop();
   let [user, pass] = base64.decode(basic).split(':');
   try {
@@ -18,8 +18,6 @@ module.exports = async (req, res, next) => {
 
   function _authError(e) {
     console.log('basic :', e.message);
-
     res.status(403).send('Invalid Login');
   }
-
 }
