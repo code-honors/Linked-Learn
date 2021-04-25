@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<h1> OUR COURSES</h1>
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for course.." title="Type in a name">
+<ul id="myUL">
+    <% data.forEach(element=>{%>
+    <li > <a href="#">
+
+        <h2> <%= element.name %> </h2>
+        <p><%= element.description %> </p>
+        <p><%= element.classes %>  </p>
+
+        <form action="/student/courses" method="POST">
+            <input hidden type="text" name="course_id" id="course_id" value="<%= element.id %> ">
+            <button type="submit"> Add to my courses</button>
+        </form>
+        
+    </a>
+    </li>
+    <%}) %>
+</ul>
+
+    <h2>Categories</h2>
+
+<ul >
+
+    <% data.forEach(element=>{%>
+  <li ><a  href="#"><%= element.category %> </a></li>
+  <%}) %>
+</ul>
+
+    <script>
+        function myFunction() {
+            var input, filter, ul, li, a, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            ul = document.getElementById("myUL");
+            li = ul.getElementsByTagName("li");
+            for (i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName("a")[0];
+                txtValue = a.textContent || a.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    li[i].style.display = "";
+                } else {
+                    li[i].style.display = "none";
+                }
+            }
+        }
+        </script>
+</body>
+</html>
