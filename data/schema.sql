@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS  students(
     lastname VARCHAR (255) NOT NULL,
     profilepic VARCHAR(255) DEFAULT 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Crystal_Clear_kdm_user_female.svg/1200px-Crystal_Clear_kdm_user_female.svg.png',
     interest VARCHAR(255),
+    about TEXT,
     auth_id INT REFERENCES auth(id)
 );
 
@@ -34,6 +35,7 @@ CREATE TABLE IF NOT EXISTS  teachers(
     firstname VARCHAR (255) NOT NULL,
     lastname VARCHAR (255) NOT NULL,
     profilepic VARCHAR(255) DEFAULT 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Crystal_Clear_kdm_user_female.svg/1200px-Crystal_Clear_kdm_user_female.svg.png',
+    about TEXT,
     auth_id INT REFERENCES auth(id) 
 );
 
@@ -45,14 +47,15 @@ DROP TABLE IF EXISTS courses CASCADE;
 CREATE TABLE IF NOT EXISTS  courses(
     id SERIAL PRIMARY KEY ,
     name VARCHAR (255) NOT NULL,
-    description  TEXT ,
-    classes VARCHAR (255),
-    category VARCHAR(255) 
+    img VARCHAR (255) DEFAULT 'https://pc-tablet.com/wp-content/uploads/2020/11/stock-online-course.png',
+    category VARCHAR(255),
+    description TEXT ,
+    classes TEXT
 );
 
-INSERT INTO courses (name,description,classes,category) values ('Cal','asddqweqweqwe','qweqweqwe','math');
-INSERT INTO courses (name,description,classes,category) values ('401','asddqweqweqwe','qweqweqwe','code');
-INSERT INTO courses (name,description,classes,category) values ('301','asddqweqweqwe','qweqweqwe','code');
+INSERT INTO courses (name,description,category,classes) values ('Cal','asddqweqweqwe','math', 'Class 1:');
+INSERT INTO courses (name,description,category,classes) values ('401','asddqweqweqwe','code', 'Class 1:');
+INSERT INTO courses (name,description,category,classes) values ('301','asddqweqweqwe','code', 'Class 1:');
 
 DROP TABLE IF EXISTS students_courses;
 
@@ -69,7 +72,7 @@ SELECT * FROM students_courses JOIN students ON students_courses.student_id = st
 DROP TABLE IF EXISTS teachers_courses;
 
 CREATE TABLE IF NOT EXISTS  teachers_courses(
-    id SERIAL PRIMARY KEY ,
+    id SERIAL PRIMARY KEY,
     teacher_id INT REFERENCES teachers(id),
     course_id INT REFERENCES courses(id) ON DELETE CASCADE
 );
@@ -77,3 +80,31 @@ CREATE TABLE IF NOT EXISTS  teachers_courses(
 INSERT INTO teachers_courses (teacher_id, course_id) values (1, 2) RETURNING *;
 INSERT INTO teachers_courses (teacher_id, course_id) values (1, 3) RETURNING *;
 SELECT * FROM teachers_courses JOIN teachers ON teachers_courses.teacher_id = teachers.id JOIN courses ON teachers_courses.course_id = courses.id;
+
+DROP TABLE IF EXISTS course_comments;
+
+CREATE TABLE IF NOT EXISTS course_comments(
+    id SERIAL PRIMARY KEY,
+    student_id INT REFERENCES students(id),
+    course_id INT REFERENCES courses(id) ON DELETE CASCADE,
+    comment TEXT NOT NULL,
+    time VARCHAR(255)
+);
+
+DROP TABLE IF EXISTS teachers_events;
+
+CREATE TABLE IF NOT EXISTS teachers_events(
+    id SERIAL PRIMARY KEY,
+    teacher_id INT REFERENCES teachers(id),
+    event VARCHAR(255),
+    time VARCHAR(255)
+);
+
+DROP TABLE IF EXISTS students_events;
+
+CREATE TABLE IF NOT EXISTS students_events(
+    id SERIAL PRIMARY KEY,
+    student_id INT REFERENCES students(id),
+    event VARCHAR(255),
+    time VARCHAR(255)
+);
