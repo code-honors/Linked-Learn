@@ -2,10 +2,18 @@
 
 const client = require('../src/db.js');
 // const pg = require('pg');
+// const client = new pg.Client({
+//     user     : 'adamra',
+//     password : '123456',
+//     database : 'linkedlearntest',
+//     host     : 'localhost',
+//     port     : '5432'
+//   });
+
 // const client = new pg.Client('postgres://adamra:123456@localhost:5432/linkedlearntest');
-const superTest = require('supertest');
+const supertest = require('supertest');
 const { app } = require('../src/server');
-const request = superTest(app);
+const request = supertest(app);
 let adminUser = {
   username: 'afnan',
   password: '123456',
@@ -18,7 +26,7 @@ let sUser = {
   username: 'zaid',
   password: '123456',
 };
-let aToken, tToken, sToken;
+let aToken, tToken, sToken, id;
 
 describe('==================AUTH==================', () => {
   beforeAll(async () => {
@@ -142,6 +150,7 @@ describe('==================AUTH==================', () => {
   });
 
   afterAll(async () => {
+    await client.query('DELETE FROM auth WHERE id=$1;', [id]);
     // await client.query(`DROP DATABASE IF EXISTS linkedlearntest;`);
     await client.end();
   });
@@ -283,6 +292,7 @@ describe('==================AUTH==================', () => {
     const response = await request.post('/auth/signup').send(newUser);
     expect(response.status).toEqual(201);
     expect(response.body.user.username).toEqual(newUser.username);
+    id = response.body.user.id;
   });
 
   it('should not create a user if username exists', async () => {
