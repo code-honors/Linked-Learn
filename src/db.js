@@ -2,7 +2,7 @@ require('dotenv').config();
 const pg = require('pg');
 let client;
 let DATABASE_URL =
-  'postgres://kswivudrcwfihg:afdbd3dc96ec0f5ae6e3a34b2b24e21da3e9f5411af170c41013d9cb4cc83fa6@ec2-52-7-115-250.compute-1.amazonaws.com:5432/d268u2e8q7g121';
+  'postgres://zzidlgabrshhyw:265221cf22e1d75e1a3d6bd74aa6a0fc0a2365bf1b716dbfbacffbd357a58b11@ec2-54-90-211-192.compute-1.amazonaws.com:5432/d1db7j146ci2js';
 
 if (!process.env.DATABASE_URL) {
   client = new pg.Client({
