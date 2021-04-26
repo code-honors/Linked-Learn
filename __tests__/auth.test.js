@@ -28,7 +28,7 @@ let sUser = {
 };
 let aToken, tToken, sToken, id;
 
-describe('==================AUTH==================', () => {
+xdescribe('==================AUTH==================', () => {
   beforeAll(async () => {
     await client.connect();
     // await client.query(`DROP DATABASE IF EXISTS linkedlearntest;`);
