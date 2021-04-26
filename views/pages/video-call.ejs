@@ -1,0 +1,31 @@
+<html>
+
+<head>
+    <title>Linked Learn</title>
+    <!-- <link rel="stylesheet" href="./style.css"> -->
+</head>
+
+<body>
+    <h1 class="title">Linked Learn</h1>
+    <p id="notification" hidden></p>
+    <div id="entry-modal">
+        <p>Create or Join Meeting</p>
+        <input id="idInput" placeholder="Enter Remote Peer ID" required>
+        <div>
+            <button id="connectToPeerBtn" onclick="connectToPeer()">Connect To Peer</button>
+        </div>
+    </div>
+    <button id="shareScreenBtn" >Share Screen</button>
+    <div class="meet-area">
+        <!-- Remote Video Element-->
+        <video id="remoteVideo"></video>
+
+        <!-- Local Video Element-->
+        <video id="localVideo"></video>
+    </div>
+</body>
+
+<script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+<script src="./js/video-call.js"></script>
+
+</html>
