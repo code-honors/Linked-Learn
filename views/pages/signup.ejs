@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Sign Up Now</h1>
+    <form action="/auth/signup" method="post">
+        <input type="text" placeholder="username" name="username" class="input-box" required>
+        <input type="password" placeholder="Password" name="password" class="input-box" required>
+        <input type="text" placeholder="Email" name="email" class="input-box" required ">
+        <input type="text" placeholder="Role" name="role" class="input-box" required ">
+        <!-- <input type="text" placeholder="Last name" name="lastName" class="input-box" required> -->
+        <button class="signBtn">Sign Up</button>
+        <p>have an account already? <a href="/signin">Login</a></p>
+        <a href="auth/google">Sign up with google</a>
+         
+    </form>
+</body>
+</html>
