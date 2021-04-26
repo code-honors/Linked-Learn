@@ -3,12 +3,11 @@
 const express = require('express');
 const authRouter = express.Router();
 const bcrypt = require('bcrypt');
-const {User, generateToken} = require('./models/users.js');
+const { User, generateToken } = require('./models/users.js');
 const basicAuth = require('./middleware/basic.js');
 const bearerAuth = require('./middleware/bearer.js');
 const permissions = require('./middleware/acl.js');
 const client = require('../db.js');
-
 
 authRouter.get('/signup', (req, res) => {
   res.render('pages/signup');
@@ -20,24 +19,39 @@ authRouter.post('/signup', signupFunction);
 
 authRouter.post('/signin', basicAuth, signinFunction);
 
-authRouter.get('/users', bearerAuth, permissions('admin'), async (req, res, next) => {
-  let SQL = `SELECT * FROM auth;`;
-  const users = await client.query(SQL);
-  const list = users.rows.map((user) => user.role);
-  res.status(200).json(list);
-});
+authRouter.get(
+  '/users',
+  bearerAuth,
+  permissions('admin'),
+  async (req, res, next) => {
+    let SQL = `SELECT * FROM auth;`;
+    const users = await client.query(SQL);
+    const list = users.rows.map((user) => user.role);
+    res.status(200).json(list);
+  }
+);
 
-authRouter.get('/teacher', bearerAuth, permissions('teacher'), async (req, res, next) => {
-  res.status(200).send('Welcome to the teachers area');
-});
+authRouter.get(
+  '/teacher',
+  bearerAuth,
+  permissions('teacher'),
+  async (req, res, next) => {
+    res.status(200).send('Welcome to the teachers area');
+  }
+);
 
-authRouter.get('/student', bearerAuth, permissions('student'), async (req, res, next) => {
-  res.status(200).send('Welcome to the students area');
-});
+authRouter.get(
+  '/student',
+  bearerAuth,
+  permissions('student'),
+  async (req, res, next) => {
+    res.status(200).send('Welcome to the students area');
+  }
+);
 
 module.exports = authRouter;
 
-async function signupFunction (req, res, next) {
+async function signupFunction(req, res, next) {
   try {
     let SQL = `SELECT * FROM auth WHERE username=$1;`;
     let { username, email } = req.body;

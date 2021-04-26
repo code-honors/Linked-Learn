@@ -6,22 +6,23 @@ const jwt = require('jsonwebtoken');
 const client = require('../../db.js');
 
 class User {
-  constructor(obj){
-    this.username = obj.username,
-    this.password = obj.password,
-    this.email = obj.email,
-    this.role = obj.role || 'student',
-    this.token = 0;
+  constructor(obj) {
+    (this.username = obj.username),
+      (this.password = obj.password),
+      (this.email = obj.email),
+      (this.role = obj.role || 'student'),
+      (this.token = 0);
   }
-
 }
 
 async function authenticateBasic(username, password) {
   const SQL = `SELECT * FROM auth WHERE username=$1;`;
   const user = await client.query(SQL, [username]);
-  console.log(user.rows[0]);
-  const valid = await bcrypt.compare(password, user.rows[0].password)
-  if (valid) { return user.rows[0]; }
+  // console.log(user.rows[0]);
+  const valid = await bcrypt.compare(password, user.rows[0].password);
+  if (valid) {
+    return user.rows[0];
+  }
   throw new Error('Invalid User');
 }
 
@@ -30,16 +31,23 @@ async function authenticateWithToken(token) {
     const parsedToken = jwt.verify(token, process.env.SECRET);
     const SQL = `SELECT * FROM auth WHERE username=$1;`;
     const user = await client.query(SQL, [parsedToken.username]);
-    if (user.rows.length > 0) { return user.rows[0]; }
-    throw new Error("User Not Found");
+    if (user.rows.length) {
+      return user.rows[0];
+    }
+    // throw new Error("User Not Found");
   } catch (e) {
-    throw new Error(e.message)
+    throw new Error(e.message);
   }
 }
 
-function generateToken(username){
-  let token = jwt.sign({username}, process.env.SECRET);
+function generateToken(username) {
+  let token = jwt.sign({ username }, process.env.SECRET);
   return token;
 }
 
-module.exports = {User, authenticateBasic, authenticateWithToken, generateToken};
+module.exports = {
+  User,
+  authenticateBasic,
+  authenticateWithToken,
+  generateToken,
+};
