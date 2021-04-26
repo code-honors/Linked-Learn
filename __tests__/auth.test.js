@@ -34,6 +34,7 @@ xdescribe('==================AUTH==================', () => {
     // await client.query(`DROP DATABASE IF EXISTS linkedlearntest;`);
     // await client.query(`CREATE DATABASE linkedlearntest;`);
     await client.query(`DROP TABLE IF EXISTS auth CASCADE;
+
     DROP TYPE IF EXISTS roles;
     CREATE TYPE roles AS enum('admin', 'teacher', 'student');
     
@@ -321,4 +322,3 @@ xdescribe('==================AUTH==================', () => {
       `email ${newUser.email} already exists, sign in instead`
     );
   });
-})

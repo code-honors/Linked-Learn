@@ -1,8 +1,6 @@
 'use strict';
 
-
 require('dotenv').config();
-const { app } = require('./src/server.js');
 const client = require('./src/db.js');
 
 // Start up DB Server
@@ -23,9 +21,11 @@ const client = require('./src/db.js');
 
 const server = require('./src/server.js');
 
-client.connect()
+client
+  .connect()
   .then(() => {
     server.start(process.env.PORT);
   })
-  .catch(e => { console.log('connection error', e) });
-
+  .catch((e) => {
+    console.log('connection error', e);
+  });
