@@ -34,13 +34,6 @@ authRouter.get('/teacher', bearerAuth, permissions('teacher'), async (req, res, 
 authRouter.get('/student', bearerAuth, permissions('student'), async (req, res, next) => {
   res.status(200).send('Welcome to the students area');
 });
-<<<<<<< HEAD
-
-
-module.exports = authRouter;
-
-=======
->>>>>>> 9b9dbbde2628a81d133a301e67c82329507e9fbf
 
 module.exports = authRouter;
 
@@ -86,8 +79,5 @@ function signinFunction(req, res, next) {
     token: generateToken(req.user.username),
   };
   res.status(200).json(user);
-<<<<<<< HEAD
-=======
   next();
->>>>>>> 9b9dbbde2628a81d133a301e67c82329507e9fbf
 }

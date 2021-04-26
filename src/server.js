@@ -32,72 +32,83 @@ app.use(express.urlencoded({ extended: true }));
 
 
 
-/////////////////////////////////////////
+////////////////// chat ///////////////////////
 const path = require('path');
-const server = require('http').createServer(app);
-const io = require('socket.io')(server);
+const http = require('http');
+const socketio = require('socket.io');
+const formatMessage = require('./utils/messages');
+const {
+  userJoin,
+  getCurrentUser,
+  userLeave,
+  getRoomUsers
+} = require('./utils/users');
 
+const server = http.createServer(app);
+const io = socketio(server);
+
+
+// Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
 app.get('/chat', function(req, res){
     res.sendFile(path.join(__dirname, 'public/chat'));
 });
+const botName = 'Chat starts';
 
+// Run when client connects
+io.on('connection', socket => {
+  socket.on('joinRoom', ({ username, room }) => {
+    const user = userJoin(socket.id, username, room);
 
+    socket.join(user.room);
 
-let numUsers = 0;
+    // Welcome current user
+    socket.emit('message', formatMessage(botName, 'Welcome !'));
 
-io.on('connection', (socket) => {
-  let addedUser = false;
+    // Broadcast when a user connects
+    socket.broadcast
+      .to(user.room)
+      .emit(
+        'message',
+        formatMessage(botName, `${user.username} has joined the chat`)
+      );
 
-  socket.on('create', function(room) {
-    socket.join(room);
-  });
-
-  socket.on('new message', (data) => {
-    socket.broadcast.emit('new message', {
-      username: socket.username,
-      message: data
+    // Send users and room info
+    io.to(user.room).emit('roomUsers', {
+      room: user.room,
+      users: getRoomUsers(user.room)
     });
   });
 
-  socket.on('add user', (username) => {
-    if (addedUser) return;
+  // Listen for chatMessage
+  socket.on('chatMessage', msg => {
+    const user = getCurrentUser(socket.id);
 
-    socket.username = username;
-    ++numUsers;
-    addedUser = true;
-    socket.emit('login', {
-      numUsers: numUsers
-    });
-    socket.broadcast.emit('user joined', {
-      username: socket.username,
-      numUsers: numUsers
-    });
+    io.to(user.room).emit('message', formatMessage(user.username, msg));
   });
 
-  socket.on('typing', () => {
-    socket.broadcast.emit('typing', {
-      username: socket.username
-    });
-  });
-
-  socket.on('stop typing', () => {
-    socket.broadcast.emit('stop typing', {
-      username: socket.username
-    });
-  });
-
+  // Runs when client disconnects
   socket.on('disconnect', () => {
-    if (addedUser) {
-      --numUsers;
+    const user = userLeave(socket.id);
 
-      socket.broadcast.emit('user left', {
-        username: socket.username,
-        numUsers: numUsers
+    if (user) {
+      io.to(user.room).emit(
+        'message',
+        formatMessage(botName, `${user.username} has left the chat`)
+      );
+
+      // Send users and room info
+      io.to(user.room).emit('roomUsers', {
+        room: user.room,
+        users: getRoomUsers(user.room)
       });
     }
   });
 });
+
+
+
 
 //////////////////////////////////////////
 
