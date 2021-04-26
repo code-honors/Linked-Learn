@@ -137,6 +137,7 @@ app.use(methodOverride('_method'));
 app.use('/student', studentRoutes);
 app.use('/teacher', teacherRoutes);
 app.use('/courses', coursesRoutes);
+app.use('/auth', authRoutes);
 
 passport.use(
   new GoogleStrategy(
@@ -171,7 +172,6 @@ app.get(
   }
 );
 
-app.use('/auth', authRoutes);
 app.use('*', notFoundHandler);
 app.use(errorHandler);
 
