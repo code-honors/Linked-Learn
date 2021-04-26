@@ -21,7 +21,8 @@ async function getCourseById(req, res, next) {
     let results = await client.query(`SELECT * FROM courses WHERE id=$1;`, [
       req.params.id,
     ]);
-    res.render('pages/course', { data: results.rows[0] });
+    // console.log(results.rows);
+    res.send(results.rows[0]);
   } catch (error) {
     next(error);
   }
@@ -36,7 +37,7 @@ async function addComment(req, res, next) {
       [req.body.comment, 1, date, req.params.id] // from session or req.obj
     );
     // res.send(results.rows[0]);
-    res.render('pages/course', { data: results.rows[0] });
+    res.send(results.rows[0]);
   } catch (error) {
     next(error);
   }

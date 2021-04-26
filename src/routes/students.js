@@ -82,7 +82,7 @@ async function deleteCourses(req, res, next) {
       'DELETE FROM students_courses WHERE  course_id=$1',
       [req.params.id]
     );
-    res.json({ message: 'Deleted' });
+    res.send('Deleted');
   } catch (err) {
     next(err);
   }
