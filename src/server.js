@@ -9,12 +9,15 @@ const path = require('path');
 const http = require('http');
 const socketio = require('socket.io');
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
-
 const passport = require('passport');
-
 const app = express();
+const server = http.createServer(app);
+const io = socketio(server);
+
 const SECRET = process.env.SECRET;
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+
+
 
 const studentRoutes = require('./routes/students.js');
 const teacherRoutes = require('./routes/teachers.js');
@@ -30,8 +33,6 @@ const {
   getRoomUsers,
 } = require('./utils/users');
 
-const server = http.createServer(app);
-const io = socketio(server);
 
 app.use(cors());
 app.use(morgan('dev'));
@@ -166,14 +167,19 @@ app.get(
   }
 );
 
+app.get("/video", (request, response) => {
+  response.render("pages/video-call");
+});
+
+
 app.use('*', notFoundHandler);
 app.use(errorHandler);
 
 module.exports = {
-  io,
   app,
   start: (port) => {
     const PORT = port || 8080;
     server.listen(PORT, () => console.log(`Server Up on ${PORT}`));
-  },
+  }
 };
+
