@@ -28,7 +28,7 @@ let sUser = {
 };
 let aToken, tToken, sToken, id;
 
-xdescribe('==================AUTH==================', () => {
+describe('==================AUTH==================', () => {
   beforeAll(async () => {
     await client.connect();
     // await client.query(`DROP DATABASE IF EXISTS linkedlearntest;`);
@@ -161,10 +161,10 @@ xdescribe('==================AUTH==================', () => {
       .set(
         'Authorization',
         'basic ' +
-          new Buffer.from(
-            `${adminUser.username}:${adminUser.password}`,
-            'utf8'
-          ).toString('base64')
+        new Buffer.from(
+          `${adminUser.username}:${adminUser.password}`,
+          'utf8'
+        ).toString('base64')
       );
     aToken = response.body.token;
     expect(response.status).toEqual(200);
@@ -178,10 +178,10 @@ xdescribe('==================AUTH==================', () => {
       .set(
         'Authorization',
         'basic ' +
-          new Buffer.from(
-            `${tUser.username}:${tUser.password}`,
-            'utf8'
-          ).toString('base64')
+        new Buffer.from(
+          `${tUser.username}:${tUser.password}`,
+          'utf8'
+        ).toString('base64')
       );
     tToken = response.body.token;
     expect(response.status).toEqual(200);
@@ -195,10 +195,10 @@ xdescribe('==================AUTH==================', () => {
       .set(
         'Authorization',
         'basic ' +
-          new Buffer.from(
-            `${sUser.username}:${sUser.password}`,
-            'utf8'
-          ).toString('base64')
+        new Buffer.from(
+          `${sUser.username}:${sUser.password}`,
+          'utf8'
+        ).toString('base64')
       );
     sToken = response.body.token;
     expect(response.status).toEqual(200);
@@ -212,9 +212,9 @@ xdescribe('==================AUTH==================', () => {
       .set(
         'Authorization',
         'basic ' +
-          new Buffer.from(`afna:${adminUser.password}`, 'utf8').toString(
-            'base64'
-          )
+        new Buffer.from(`afna:${adminUser.password}`, 'utf8').toString(
+          'base64'
+        )
       );
     expect(response.status).toEqual(403);
     expect(response.text).toEqual('Invalid Login');
@@ -226,9 +226,9 @@ xdescribe('==================AUTH==================', () => {
       .set(
         'Authorization',
         'basic ' +
-          new Buffer.from(`${adminUser.username}:12345`, 'utf8').toString(
-            'base64'
-          )
+        new Buffer.from(`${adminUser.username}:12345`, 'utf8').toString(
+          'base64'
+        )
       );
     expect(response.status).toEqual(403);
     expect(response.text).toEqual('Invalid Login');

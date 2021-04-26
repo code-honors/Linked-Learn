@@ -29,11 +29,13 @@ async function updateProfileHandler(req, res, next) {
       req.body.profilepic,
       req.params.id,
     ];
+
     const results = await client.query(
-      'UPDATE teachers SET firstname = $1 , lastname = $2, profilepic =$3, WHERE id=$4 RETURNING *;',
+      'UPDATE teachers SET firstname = $1 , lastname = $2, profilepic =$3 WHERE id=$4 RETURNING *;',
       values
     );
-    res.json(results.rows);
+    // console.log(results.rows[0]);
+    res.json(results.rows[0]);
   } catch (err) {
     next(err);
   }
@@ -56,7 +58,8 @@ async function courseHandler(req, res, next) {
       'SELECT teachers.firstname , courses.name FROM teachers_courses JOIN teachers ON teachers_courses.teacher_id = teachers.id JOIN courses ON teachers_courses.course_id = courses.id WHERE teachers_courses.course_id = $1;',
       [req.params.id]
     );
-    res.json(results.rows);
+    console.log(results.rows);
+    res.json(results.rows[0]);
   } catch (err) {
     next(err);
   }
@@ -83,9 +86,9 @@ async function addCourses(req, res, next) {
       [1, course.rows[0].id]
     );
 
-    res.json(results.rows);
+    res.json(results.rows[0]);
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     next(err);
   }
 }
