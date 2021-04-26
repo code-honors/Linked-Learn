@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS auth CASCADE;
 
+DROP TYPE IF EXISTS roles;
 CREATE TYPE roles AS enum('admin', 'teacher', 'student');
 
 CREATE TABLE IF NOT EXISTS auth(
