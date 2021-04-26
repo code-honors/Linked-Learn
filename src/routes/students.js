@@ -15,6 +15,7 @@ async function profileHandler(req, res, next) {
     const results = await client.query(
       'SELECT students.*, auth.role FROM students JOIN auth ON students.auth_id = auth.id;'
     );
+    // res.json(results.rows);
     res.render('pages/studentProfile', { data: results.rows[0] });
   } catch (err) {
     next(err);
@@ -33,7 +34,7 @@ async function updateProfileHandler(req, res, next) {
       'UPDATE students SET firstname = $1 , lastname = $2, profilepic =$3, interest =$4 WHERE id=$5 RETURNING *;',
       values
     );
-    res.json(results.rows);
+    res.json(results.rows[0]);
   } catch (err) {
     next(err);
   }
@@ -56,7 +57,7 @@ async function courseHandler(req, res, next) {
       'SELECT students.firstname , courses.name FROM students_courses JOIN students ON students_courses.student_id = students.id JOIN courses ON students_courses.course_id = courses.id WHERE students_courses.course_id = $1;',
       [req.params.id]
     );
-    res.json(results.rows);
+    res.json(results.rows[0]);
   } catch (err) {
     next(err);
   }
@@ -69,7 +70,7 @@ async function addCourses(req, res, next) {
       'INSERT INTO students_courses (student_id, course_id) values ($1, $2) RETURNING *; ',
       values
     );
-    res.json(results.rows);
+    res.json(results.rows[0]);
   } catch (err) {
     next(err);
   }
