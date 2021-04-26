@@ -1,16 +1,6 @@
 'use strict';
 
 const client = require('../src/db.js');
-// const pg = require('pg');
-// const client = new pg.Client({
-//     user     : 'adamra',
-//     password : '123456',
-//     database : 'linkedlearntest',
-//     host     : 'localhost',
-//     port     : '5432'
-//   });
-
-// const client = new pg.Client('postgres://adamra:123456@localhost:5432/linkedlearntest');
 const supertest = require('supertest');
 const { app } = require('../src/server');
 const request = supertest(app);
@@ -28,7 +18,7 @@ let sUser = {
 };
 let aToken, tToken, sToken, id;
 
-xdescribe('==================AUTH==================', () => {
+describe('==================AUTH==================', () => {
   beforeAll(async () => {
     await client.connect();
     // await client.query(`DROP DATABASE IF EXISTS linkedlearntest;`);

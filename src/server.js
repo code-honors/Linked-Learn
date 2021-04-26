@@ -17,8 +17,6 @@ const io = socketio(server);
 const SECRET = process.env.SECRET;
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 
-
-
 const studentRoutes = require('./routes/students.js');
 const teacherRoutes = require('./routes/teachers.js');
 const coursesRoutes = require('./routes/courses.js');
@@ -33,7 +31,6 @@ const {
   getRoomUsers,
 } = require('./utils/users');
 
-
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
@@ -41,8 +38,6 @@ app.set('view engine', 'ejs');
 // app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static('./public'));
 app.use(express.urlencoded({ extended: true }));
-
-
 
 ////////////////// chat ///////////////////////
 
@@ -101,7 +96,6 @@ io.on('connection', (socket) => {
 
 //////////////////////////////////////////
 
-
 passport.use(
   new GoogleStrategy(
     {
@@ -121,17 +115,36 @@ app.get('/', (req, res) => {
   res.render('pages/index');
 });
 
-app.get(
-  '/google',
-  passport.authenticate('google', { scope: ['profile'] })
-);
+app.get('/google', passport.authenticate('google', { scope: ['profile'] }));
 app.use(methodOverride('_method'));
 app.use('/student', studentRoutes);
 app.use('/teacher', teacherRoutes);
 app.use('/courses', coursesRoutes);
 app.use('/auth', authRoutes);
+
+app.get('/', (req, res) => {
+  res.render('pages/home');
+});
+
+app.get(
+  '/auth/google',
+  passport.authenticate('google', { scope: ['profile'] })
+);
+
+app.get(
+  '/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function (req, res) {
+    res.redirect('/');
+  }
+);
+
 app.get('/chat', function (req, res) {
   res.sendFile(path.join(__dirname, 'public/chat'));
+});
+
+app.get('/video', (request, response) => {
+  response.render('pages/video-call');
 });
 
 passport.use(
@@ -149,29 +162,6 @@ passport.use(
   )
 );
 
-app.get('/', (req, res) => {
-  res.render('pages/home');
-});
-
-app.get(
-  '/auth/google',
-  passport.authenticate('google', { scope: ['profile'] })
-);
-
-app.get(
-  '/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  function (req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
-  }
-);
-
-app.get("/video", (request, response) => {
-  response.render("pages/video-call");
-});
-
-
 app.use('*', notFoundHandler);
 app.use(errorHandler);
 
@@ -180,6 +170,5 @@ module.exports = {
   start: (port) => {
     const PORT = port || 8080;
     server.listen(PORT, () => console.log(`Server Up on ${PORT}`));
-  }
+  },
 };
-
