@@ -7,7 +7,7 @@ const request = superTest(app);
 
 
 
-xdescribe('==================Students Routes==================', () => {
+xdescribe('==================COURSES==================', () => {
     beforeAll(async () => {
         await client.connect();
     });

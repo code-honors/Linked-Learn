@@ -29,7 +29,8 @@
   },
   "scripts": {
     "test": "jest --coverage --verbose --detectOpenHandles",
-    "start": "node index.js"
+    "start": "node index.js",
+    "lint": "eslint '**/*.js'"
   },
   "repository": {
     "type": "git",

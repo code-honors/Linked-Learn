@@ -4,60 +4,51 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 require('dotenv').config();
-const client = require('./db.js');
 const methodOverride = require('method-override');
-const superagent = require('superagent');
-
+const path = require('path');
+const http = require('http');
+const socketio = require('socket.io');
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
-const notFoundHandler = require('./error-handlers/404.js');
-const errorHandler = require('./error-handlers/500.js');
-const authRoutes = require('./auth/routes.js');
-// const routes = require('./routs/raouts.js');
+
 const passport = require('passport');
 
 const app = express();
 const SECRET = process.env.SECRET;
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+
 const studentRoutes = require('./routes/students.js');
 const teacherRoutes = require('./routes/teachers.js');
 const coursesRoutes = require('./routes/courses.js');
-
-app.use(cors());
-app.use(morgan('dev'));
-app.use(express.json());
-app.set('view engine', 'ejs');
-app.use(express.static('./public'));
-app.use(express.urlencoded({ extended: true }));
-
-
-
-
-////////////////// chat ///////////////////////
-const path = require('path');
-const http = require('http');
-const socketio = require('socket.io');
+const authRoutes = require('./auth/routes.js');
+const notFoundHandler = require('./error-handlers/404.js');
+const errorHandler = require('./error-handlers/500.js');
 const formatMessage = require('./utils/messages');
 const {
   userJoin,
   getCurrentUser,
   userLeave,
-  getRoomUsers
+  getRoomUsers,
 } = require('./utils/users');
 
 const server = http.createServer(app);
 const io = socketio(server);
 
-
-// Set static folder
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
+app.use(morgan('dev'));
+app.use(express.json());
+app.set('view engine', 'ejs');
 // app.use(express.static(path.join(__dirname, 'public')));
-app.get('/chat', function(req, res){
-    res.sendFile(path.join(__dirname, 'public/chat'));
-});
+app.use(express.static('./public'));
+app.use(express.urlencoded({ extended: true }));
+
+
+
+////////////////// chat ///////////////////////
+
 const botName = 'Chat starts';
 
 // Run when client connects
-io.on('connection', socket => {
+io.on('connection', (socket) => {
   socket.on('joinRoom', ({ username, room }) => {
     const user = userJoin(socket.id, username, room);
 
@@ -77,12 +68,12 @@ io.on('connection', socket => {
     // Send users and room info
     io.to(user.room).emit('roomUsers', {
       room: user.room,
-      users: getRoomUsers(user.room)
+      users: getRoomUsers(user.room),
     });
   });
 
   // Listen for chatMessage
-  socket.on('chatMessage', msg => {
+  socket.on('chatMessage', (msg) => {
     const user = getCurrentUser(socket.id);
 
     io.to(user.room).emit('message', formatMessage(user.username, msg));
@@ -101,43 +92,14 @@ io.on('connection', socket => {
       // Send users and room info
       io.to(user.room).emit('roomUsers', {
         room: user.room,
-        users: getRoomUsers(user.room)
+        users: getRoomUsers(user.room),
       });
     }
   });
 });
 
-
-
-
 //////////////////////////////////////////
 
-passport.use(new GoogleStrategy({
-  clientID: GOOGLE_CLIENT_ID,
-  clientSecret: SECRET,
-  callbackURL: "/"
-},
-  function (accessToken, refreshToken, profile, cb) {
-    User.findOrCreate({ googleId: profile.id }, function (err, user) {
-      return cb(err, user);
-    });
-  }
-));
-
-app.get('/', (req, res) => {
-    res.send('home');
-});
-
-
-// app.get()
-
-app.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile'] }));
-app.use(methodOverride('_method'));
-app.use('/student', studentRoutes);
-app.use('/teacher', teacherRoutes);
-app.use('/courses', coursesRoutes);
-app.use('/auth', authRoutes);
 
 passport.use(
   new GoogleStrategy(
@@ -159,6 +121,38 @@ app.get('/', (req, res) => {
 });
 
 app.get(
+  '/google',
+  passport.authenticate('google', { scope: ['profile'] })
+);
+app.use(methodOverride('_method'));
+app.use('/student', studentRoutes);
+app.use('/teacher', teacherRoutes);
+app.use('/courses', coursesRoutes);
+app.use('/auth', authRoutes);
+app.get('/chat', function (req, res) {
+  res.sendFile(path.join(__dirname, 'public/chat'));
+});
+
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: GOOGLE_CLIENT_ID,
+      clientSecret: SECRET,
+      callbackURL: '/',
+    },
+    function (accessToken, refreshToken, profile, cb) {
+      User.findOrCreate({ googleId: profile.id }, function (err, user) {
+        return cb(err, user);
+      });
+    }
+  )
+);
+
+app.get('/', (req, res) => {
+  res.render('pages/home');
+});
+
+app.get(
   '/auth/google',
   passport.authenticate('google', { scope: ['profile'] })
 );
@@ -176,7 +170,8 @@ app.use('*', notFoundHandler);
 app.use(errorHandler);
 
 module.exports = {
-  app: app,
+  io,
+  app,
   start: (port) => {
     const PORT = port || 8080;
     server.listen(PORT, () => console.log(`Server Up on ${PORT}`));
