@@ -7,7 +7,7 @@ const request = superTest(app);
 
 
 
-describe('==================Students Routes==================', () => {
+xdescribe('==================Students Routes==================', () => {
     beforeAll(async () => {
         await client.connect();
         await client.query(`DROP TABLE IF EXISTS auth CASCADE;
