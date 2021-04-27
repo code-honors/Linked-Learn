@@ -75,14 +75,14 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 
 ### <ins>**Students**</ins> (/student)
 
-#### profile
+- #### profile
 
 | Method  | Endpoint | Description  |
 | :--- | :--- | :--- |
 | GET | /student/profile | Shows the student profile |
 | PATCH | /student/profile | Edit profile data |
 
-#### events
+- #### events
 
 | Method  | Endpoint | Description  |
 | :--- | :--- | :--- |
@@ -92,7 +92,7 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 | PATCH | /student/profile/events/:id | Edits an event information for the student |
 | DELETE | /student/profile/events/:id | Deletes an event from the students profile |
 
-#### courses
+- #### courses
 
 | Method  | Endpoint | Description  |
 | :--- | :--- | :--- |
@@ -104,14 +104,14 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 
 ### <ins>**Teachers**</ins> (/teacher)
 
-#### profile
+- #### profile
 
 | Method  | Endpoint | Description  |
 | :--- | :--- | :--- |
 | GET | /teacher/profile | Shows the teacher profile |
 | PATCH | /teacher/profile | Edit profile data |
 
-#### events
+- #### events
 
 | Method  | Endpoint | Description  |
 | :--- | :--- | :--- |
@@ -121,7 +121,7 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 | PATCH | /teacher/profile/events/:id | Edits an event information for the teacher |
 | DELETE | /teacher/profile/events/:id | Deletes an event from the teachers profile |
 
-#### courses
+- #### courses
 
 | Method  | Endpoint | Description  |
 | :--- | :--- | :--- |
