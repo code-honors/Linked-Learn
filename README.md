@@ -37,6 +37,8 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 | :---: | :--- | :--- |
 | GET | / | home page, with a website description and a button to join |
 
+------
+
 ### **Auth** (/auth)
 
 | Method | Endpoint | Description  |
@@ -47,11 +49,15 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 | POST | /signin | Submit signin form |
 | GET | /google | OAuth with Google |
 
+------
+
 ### **Dashboard**
 
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
 | GET | /home | home page after joining, with a website description, courses, and some information |
+
+------
 
 ### **Courses** (/courses)
 
@@ -60,12 +66,13 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 | GET | /courses | Shows all courses, and a user can search |
 | GET | /courses/:id | Shows course details, with commments if available |
 
-------
 
 | Method  | Endpoint | Description  |
 | :--- | :--- | :--- |
 | POST | /courses/:id/comment | Used to add a comment on the current course |
 | DELETE | /courses/:id/comment | Used to delete a comment from the current course |
+
+------
 
 ### **Students** (/student)
 
@@ -74,7 +81,6 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 | GET | /student/profile | Shows the student profile |
 | PATCH | /student/profile | Edit profile data |
 
-------
 
 | Method  | Endpoint | Description  |
 | :--- | :--- | :--- |
@@ -84,7 +90,6 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 | PATCH | /student/profile/events/:id | Edits an event information for the student |
 | DELETE | /student/profile/events/:id | Deletes an event from the students profile |
 
-------
 
 | Method  | Endpoint | Description  |
 | :--- | :--- | :--- |
@@ -93,6 +98,8 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 | GET | /student/courses/:id | Shows course details, with comments if available for the student |
 | DELETE | /student/courses/:id | Used to delete a course from the student profile |
 
+------
+
 ### **Teachers** (/teacher)
 
 | Method  | Endpoint | Description  |
@@ -100,7 +107,6 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 | GET | /teacher/profile | Shows the teacher profile |
 | PATCH | /teacher/profile | Edit profile data |
 
-------
 
 | Method  | Endpoint | Description  |
 | :--- | :--- | :--- |
@@ -110,7 +116,6 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 | PATCH | /teacher/profile/events/:id | Edits an event information for the teacher |
 | DELETE | /teacher/profile/events/:id | Deletes an event from the teachers profile |
 
-------
 
 | Method  | Endpoint | Description  |
 | :--- | :--- | :--- |
@@ -119,11 +124,15 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 | GET | /teacher/courses/:id | Shows course details, with comments if available for the teacher |
 | DELETE | /teacher/courses/:id | Used to delete a course from the teacher profile |
 
+------
+
 ### **Chatting**
 
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
 | GET | /chat | shows available chat rooms, with the ability to join and participate (public chat rooms) |
+
+------
 
 ### **Meeting**
 
