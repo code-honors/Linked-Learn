@@ -78,7 +78,7 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 |   |   |   |
 | GET | /student/courses | Shows all courses for the student |
 | POST | /student/courses | Adds a new course to the student profile |
-| GET | /student/courses/:id | Shows course details, with commments if available for the student |
+| GET | /student/courses/:id | Shows course details, with comments if available for the student |
 | DELETE | /student/courses/:id | Used to delete a course from the student profile |
 
 ### **Teachers** (/teacher)
@@ -96,7 +96,7 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 |   |   |   |
 | GET | /teacher/courses | Shows all courses for the teacher |
 | POST | /teacher/courses | Adds a new course to the teacher profile |
-| GET | /teacher/courses/:id | Shows course details, with commments if available for the teacher |
+| GET | /teacher/courses/:id | Shows course details, with comments if available for the teacher |
 | DELETE | /teacher/courses/:id | Used to delete a course from the teacher profile |
 
 ### **Chatting**
