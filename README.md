@@ -59,6 +59,7 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 | :--- | :--- | :--- |
 | GET | /courses | Shows all courses, and a user can search |
 | GET | /courses/:id | Shows course details, with commments if available |
+|   |   |   |
 | POST | /courses/:id/comment | Used to add a comment on the current course |
 | DELETE | /courses/:id/comment | Used to delete a comment from the current course |
 
@@ -68,11 +69,13 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 | :--- | :--- | :--- |
 | GET | /student/profile | Shows the student profile |
 | PATCH | /student/profile | Edit profile data |
+|   |   |   |
 | GET | /student/profile/events | Shows the student calendar, with available and booked dates |
 | POST | /student/profile/events | Adds an event to the student calendar |
 | GET | /student/profile/events/:id | Shows exstra information about an event |
 | PATCH | /student/profile/events/:id | Edits an event information for the student |
 | DELETE | /student/profile/events/:id | Deletes an event from the students profile |
+|   |   |   |
 | GET | /student/courses | Shows all courses for the student |
 | POST | /student/courses | Adds a new course to the student profile |
 | GET | /student/courses/:id | Shows course details, with commments if available for the student |
@@ -84,11 +87,13 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 | :--- | :--- | :--- |
 | GET | /teacher/profile | Shows the teacher profile |
 | PATCH | /teacher/profile | Edit profile data |
+|   |   |   |
 | GET | /teacher/profile/events | Shows the teacher calendar, with available and booked dates |
 | POST | /teacher/profile/events | Adds an event to the teacher calendar |
 | GET | /teacher/profile/events/:id | Shows exstra information about an event |
 | PATCH | /teacher/profile/events/:id | Edits an event information for the teacher |
 | DELETE | /teacher/profile/events/:id | Deletes an event from the teachers profile |
+|   |   |   |
 | GET | /teacher/courses | Shows all courses for the teacher |
 | POST | /teacher/courses | Adds a new course to the teacher profile |
 | GET | /teacher/courses/:id | Shows course details, with commments if available for the teacher |
