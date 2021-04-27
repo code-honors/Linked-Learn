@@ -19,7 +19,7 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 [Trello](https://trello.com/b/j9lBB6SL)
 
 ### Domain Modeling
-![UML](public/assets/UML.png)
+![UML](public/assets/UMLv2.png)
 
 ### Entity Relationship Diagram
 ![ERD](public/assets/schema.jpg)
