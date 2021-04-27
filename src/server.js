@@ -35,6 +35,7 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 app.set('view engine', 'ejs');
+app.use(methodOverride('_method'));
 // app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static('./public'));
 app.use(express.urlencoded({ extended: true }));
@@ -115,16 +116,15 @@ app.get('/', (req, res) => {
   res.render('pages/index');
 });
 
+app.get('/home', (req, res) => {
+  res.redirect('/courses');
+});
+
+app.use('/auth', authRoutes);
 app.get('/google', passport.authenticate('google', { scope: ['profile'] }));
-app.use(methodOverride('_method'));
+app.use('/courses', coursesRoutes);
 app.use('/student', studentRoutes);
 app.use('/teacher', teacherRoutes);
-app.use('/courses', coursesRoutes);
-app.use('/auth', authRoutes);
-
-app.get('/', (req, res) => {
-  res.render('pages/home');
-});
 
 app.get(
   '/auth/google',
