@@ -11,7 +11,8 @@ router.delete('/:id/comment', deleteComment);
 async function getAllCourses(req, res, next) {
   try {
     let results = await client.query(`SELECT * FROM courses ORDER BY name;`);
-    res.render('pages/home', { data: results.rows });
+    res.send(results.rows);
+    // res.render('pages/home', { data: results.rows });
   } catch (error) {
     next(error);
   }

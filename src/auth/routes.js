@@ -75,11 +75,11 @@ async function signupFunction(req, res, next) {
         res.status(201).json(output);
       } else {
         const output = dupemail.rows[0].email;
-        res.send(`email ${output} already exists, sign in instead`);
+        res.status(403).send(`email ${output} already exists, sign in instead`);
       }
     } else {
       const output = dupusername.rows[0].username;
-      res.send(`username ${output} already exists, sign in instead`);
+      res.status(403).send(`username ${output} already exists, sign in instead`);
     }
   } catch (e) {
     console.log(e);

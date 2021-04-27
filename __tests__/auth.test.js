@@ -293,7 +293,7 @@ xdescribe('==================AUTH==================', () => {
       role: 'student',
     };
     const response = await request.post('/auth/signup').send(newUser);
-    expect(response.status).toEqual(200);
+    expect(response.status).toEqual(403);
     expect(response.text).toEqual(
       `username ${newUser.username} already exists, sign in instead`
     );
@@ -307,7 +307,7 @@ xdescribe('==================AUTH==================', () => {
       role: 'student',
     };
     const response = await request.post('/auth/signup').send(newUser);
-    expect(response.status).toEqual(200);
+    expect(response.status).toEqual(403);
     expect(response.text).toEqual(
       `email ${newUser.email} already exists, sign in instead`
     );
