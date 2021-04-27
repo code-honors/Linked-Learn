@@ -61,11 +61,14 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 
 ### **Courses** (/courses)
 
+#### courses 
+
 | Method  | Endpoint | Description  |
 | :--- | :--- | :--- |
 | GET | /courses | Shows all courses, and a user can search |
 | GET | /courses/:id | Shows course details, with commments if available |
 
+#### comments
 
 | Method  | Endpoint | Description  |
 | :--- | :--- | :--- |
@@ -76,11 +79,14 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 
 ### **Students** (/student)
 
+#### profile
+
 | Method  | Endpoint | Description  |
 | :--- | :--- | :--- |
 | GET | /student/profile | Shows the student profile |
 | PATCH | /student/profile | Edit profile data |
 
+#### events
 
 | Method  | Endpoint | Description  |
 | :--- | :--- | :--- |
@@ -90,6 +96,7 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 | PATCH | /student/profile/events/:id | Edits an event information for the student |
 | DELETE | /student/profile/events/:id | Deletes an event from the students profile |
 
+#### courses
 
 | Method  | Endpoint | Description  |
 | :--- | :--- | :--- |
@@ -102,11 +109,14 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 
 ### **Teachers** (/teacher)
 
+#### profile
+
 | Method  | Endpoint | Description  |
 | :--- | :--- | :--- |
 | GET | /teacher/profile | Shows the teacher profile |
 | PATCH | /teacher/profile | Edit profile data |
 
+#### events
 
 | Method  | Endpoint | Description  |
 | :--- | :--- | :--- |
@@ -116,6 +126,7 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 | PATCH | /teacher/profile/events/:id | Edits an event information for the teacher |
 | DELETE | /teacher/profile/events/:id | Deletes an event from the teachers profile |
 
+#### courses
 
 | Method  | Endpoint | Description  |
 | :--- | :--- | :--- |
