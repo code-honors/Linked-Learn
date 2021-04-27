@@ -16,7 +16,8 @@ async function profileHandler(req, res, next) {
       'SELECT teachers.*, auth.role FROM teachers JOIN auth ON teachers.auth_id = auth.id;'
     );
     // res.json(results.rows);
-    res.render('pages/teacherProfile', { element: results.rows[0] });
+    res.send(results.rows[0])
+    // res.render('pages/teacherProfile', { element: results.rows[0] });
   } catch (err) {
     next(err);
   }

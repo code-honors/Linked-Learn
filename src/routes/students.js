@@ -15,8 +15,8 @@ async function profileHandler(req, res, next) {
     const results = await client.query(
       'SELECT students.*, auth.role FROM students JOIN auth ON students.auth_id = auth.id;'
     );
-    // res.json(results.rows);
-    res.render('pages/studentProfile', { data: results.rows[0] });
+    res.send(results.rows[0]);
+    // res.render('pages/studentProfile', { data: results.rows[0] });
   } catch (err) {
     next(err);
   }

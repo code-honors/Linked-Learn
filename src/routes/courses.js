@@ -20,12 +20,24 @@ async function getAllCourses(req, res, next) {
 
 async function getCourseById(req, res, next) {
   try {
-    let results = await client.query(
-      `SELECT courses.*, course_comments.* FROM courses JOIN course_comments ON courses.id = course_comments.course_id WHERE courses.id=$1;`,
+    let comments = await client.query(
+      `SELECT * FROM course_comments WHERE course_id=$1;`,
       [req.params.id]
     );
-    // console.log(results.rows);
-    res.send(results.rows[0]);
+    console.log(comments.rows);
+    if (comments.rows.length > 0) {
+      let results = await client.query(
+        `SELECT courses.*, course_comments.* FROM courses JOIN course_comments ON courses.id = course_comments.course_id WHERE courses.id=$1;`,
+        [req.params.id]
+        );
+        console.log(results.rows);
+      res.send(results.rows[0]);
+    } else {
+      let results = await client.query(`SELECT * FROM courses WHERE id=$1;`, [req.params.id]);
+      console.log(results.rows);
+      res.send(results.rows[0]);
+    }
+
   } catch (error) {
     next(error);
   }
