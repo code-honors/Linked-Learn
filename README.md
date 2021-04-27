@@ -31,15 +31,14 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 
 ## Features & Routes
 
-### **Home** (/)
+### <ins>**Home**</ins> (/)
 
 | Method | Endpoint | Description  |
 | :---: | :--- | :--- |
 | GET | / | home page, with a website description and a button to join |
 
-------
 
-### **Auth** (/auth)
+### <ins>**Auth**</ins> (/auth)
 
 | Method | Endpoint | Description  |
 | :---: | :--- | :--- |
@@ -49,17 +48,15 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 | POST | /signin | Submit signin form |
 | GET | /google | OAuth with Google |
 
-------
 
-### **Dashboard**
+### <ins>**Dashboard**</ins>
 
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
 | GET | /home | home page after joining, with a website description, courses, and some information |
 
-------
 
-### **Courses** (/courses)
+### <ins>**Courses**</ins> (/courses)
 
 #### courses 
 
@@ -75,9 +72,8 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 | POST | /courses/:id/comment | Used to add a comment on the current course |
 | DELETE | /courses/:id/comment | Used to delete a comment from the current course |
 
-------
 
-### **Students** (/student)
+### <ins>**Students**</ins> (/student)
 
 #### profile
 
@@ -105,9 +101,8 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 | GET | /student/courses/:id | Shows course details, with comments if available for the student |
 | DELETE | /student/courses/:id | Used to delete a course from the student profile |
 
-------
 
-### **Teachers** (/teacher)
+### <ins>**Teachers**</ins> (/teacher)
 
 #### profile
 
@@ -135,17 +130,15 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 | GET | /teacher/courses/:id | Shows course details, with comments if available for the teacher |
 | DELETE | /teacher/courses/:id | Used to delete a course from the teacher profile |
 
-------
 
-### **Chatting**
+### <ins>**Chatting**</ins>
 
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
 | GET | /chat | shows available chat rooms, with the ability to join and participate (public chat rooms) |
 
-------
 
-### **Meeting**
+### <ins>**Meeting**</ins>
 
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
