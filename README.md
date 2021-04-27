@@ -58,14 +58,14 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 
 ### <ins>**Courses**</ins> (/courses)
 
-#### courses 
+- #### courses 
 
 | Method  | Endpoint | Description  |
 | :--- | :--- | :--- |
 | GET | /courses | Shows all courses, and a user can search |
 | GET | /courses/:id | Shows course details, with commments if available |
 
-#### comments
+- #### comments
 
 | Method  | Endpoint | Description  |
 | :--- | :--- | :--- |
