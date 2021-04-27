@@ -9,20 +9,25 @@ Afnan Damra - Ahmad Alfrijat - Bashar Nofal - Ruba Banat - Zaid Alasfar
 ### Problem Domain:
 These days the world is moving too fast and we need to keep up with it, and with the current situation and how hard it became to attend courses and meet people to learn from, we thought about a web app that helps people do that.
 
+----
+
 ### Architecture
 #### libraries, frameworks and packages
 javascript, nodejs, express, postgresql, socket.io, peerjs
 
-## Project Management Tool
+### Project Management Tool
 [Trello](https://trello.com/b/j9lBB6SL)
-
-## Wireframes:
 
 ### Domain Modeling
 ![UML](public/assets/UML.png)
 
 ### Entity Relationship Diagram
 ![ERD](public/assets/schema.jpg)
+
+### Testing
+![Test](public/assets/test.png)
+
+----
 
 ## Features & Routes
 
@@ -101,5 +106,15 @@ javascript, nodejs, express, postgresql, socket.io, peerjs
 | :--- | :--- | :--- |
 | GET | /video | gives the ability to join a call by id (private calls for 1:1 meetings) |
 
+----
+
+## Wireframes:
+![wireframe1](public/assets/wireframes/1.png)
+![wireframe2](public/assets/wireframes/2.png)
+![wireframe3](public/assets/wireframes/3.png)
+![wireframe4](public/assets/wireframes/4.png)
+![wireframe5](public/assets/wireframes/5.png)
+![wireframe6](public/assets/wireframes/6.png)
+![wireframe7](public/assets/wireframes/7.png)
 
 <!-- ## Credits and Collaborations: -->
