@@ -31,7 +31,7 @@ async function getCourseById(req, res, next) {
         [req.params.id]
         );
         console.log(results.rows);
-      res.send(results.rows[0]);
+      res.send(results.rows);
     } else {
       let results = await client.query(`SELECT * FROM courses WHERE id=$1;`, [req.params.id]);
       console.log(results.rows);
@@ -45,7 +45,7 @@ async function getCourseById(req, res, next) {
 
 async function addComment(req, res, next) {
   try {
-    let date = moment().format('LLL');
+    let date = moment().utcOffset(180).format('LLL');
     console.log(date);
     let results = await client.query(
       `INSERT INTO course_comments (comment, student_id, time, course_id) VALUES($1, $2, $3, $4) RETURNING *;`,
