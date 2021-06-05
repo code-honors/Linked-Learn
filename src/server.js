@@ -8,14 +8,10 @@ const methodOverride = require('method-override');
 const path = require('path');
 const http = require('http');
 const socketio = require('socket.io');
-var GoogleStrategy = require('passport-google-oauth20').Strategy;
-const passport = require('passport');
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
-const SECRET = process.env.SECRET;
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 
 const studentRoutes = require('./routes/students.js');
 const teacherRoutes = require('./routes/teachers.js');
@@ -97,20 +93,9 @@ io.on('connection', (socket) => {
 
 //////////////////////////////////////////
 
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: GOOGLE_CLIENT_ID,
-      clientSecret: SECRET,
-      callbackURL: '/',
-    },
-    function (accessToken, refreshToken, profile, cb) {
-      User.findOrCreate({ googleId: profile.id }, function (err, user) {
-        return cb(err, user);
-      });
-    }
-  )
-);
+
+
+// //////////////////
 
 app.get('/', (req, res) => {
   res.render('pages/index');
@@ -121,24 +106,10 @@ app.get('/home', (req, res) => {
 });
 
 app.use('/auth', authRoutes);
-app.get('/google', passport.authenticate('google', { scope: ['profile'] }));
 app.use('/courses', coursesRoutes);
 app.use('/student', studentRoutes);
 app.use('/teacher', teacherRoutes);
 
-app.get(
-  '/auth/google',
-  passport.authenticate('google', { scope: ['profile'] })
-);
-
-app.get(
-  '/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  function (req, res) {
-    console.log(req);
-    res.redirect('/');
-  }
-);
 
 app.get('/chat', function (req, res) {
   res.sendFile(path.join(__dirname, 'public/chat'));
@@ -147,21 +118,6 @@ app.get('/chat', function (req, res) {
 app.get('/video', (request, response) => {
   response.render('pages/video-call');
 });
-
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: GOOGLE_CLIENT_ID,
-      clientSecret: SECRET,
-      callbackURL: '/',
-    },
-    function (accessToken, refreshToken, profile, cb) {
-      User.findOrCreate({ googleId: profile.id }, function (err, user) {
-        return cb(err, user);
-      });
-    }
-  )
-);
 
 app.use('*', notFoundHandler);
 app.use(errorHandler);
