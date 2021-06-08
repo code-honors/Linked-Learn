@@ -48,8 +48,8 @@ CREATE TABLE IF NOT EXISTS  teachers(
 INSERT INTO teachers (firstname, lastname, auth_id) values ('Ruba', 'Banat', 2) RETURNING *;
 -- INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('Ahmad', 'Frijat','https://avatars.githubusercontent.com/u/75928390?v=4', 4) RETURNING *;
 INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('Lina', 'Alasfar','https://images.pexels.com/photos/3772711/pexels-photo-3772711.jpeg?cs=srgb&dl=pexels-andrea-piacquadio-3772711.jpg&fm=jpg', 5) RETURNING *;
-INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('mohammad', 'ahmad','https://www.google.jo/url?sa=i&url=https%3A%2F%2Ftwitter.com%2Fl_haddad&psig=AOvVaw3sPu7wBbgjRW1XTotSLwtV&ust=1623257302592000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCIiVmeq-iPECFQAAAAAdAAAAABAI', 6) RETURNING *;
-INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('Issa', 'Josef','https://www.google.jo/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FFernando_Haddad&psig=AOvVaw3sPu7wBbgjRW1XTotSLwtV&ust=1623257302592000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCIiVmeq-iPECFQAAAAAdAAAAABAD', 7) RETURNING *;
+INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('mohammad', 'ahmad','https://pbs.twimg.com/profile_images/1017809554153836544/juyy5-2Y_400x400.jpg', 6) RETURNING *;
+INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('Issa', 'Josef','https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Haddad_em_campanha_2018_%28cropped%29.jpg/800px-Haddad_em_campanha_2018_%28cropped%29.jpg', 7) RETURNING *;
 INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('Linda', 'Mailss','https://academist.qodeinteractive.com/wp-content/uploads/2018/06/educator-img-3.jpg', 8) RETURNING *;
 SELECT teachers.firstname, auth.role FROM teachers JOIN auth ON teachers.auth_id = auth.id;
 
