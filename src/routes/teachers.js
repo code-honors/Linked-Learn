@@ -5,7 +5,7 @@ const client = require('../db');
 
 router.get('/profile/:id', profileHandler);
 router.patch('/profile/:id', updateProfileHandler);
-router.get('/courses', getAllCourses);
+router.get('/:id/courses', getAllCourses);
 router.get('/courses/:id', courseHandler);
 router.post('/courses', addCourses);
 router.delete('/courses/:id', deleteCourses);
@@ -45,8 +45,10 @@ async function updateProfileHandler(req, res, next) {
 
 async function getAllCourses(req, res, next) {
   try {
+    console.log(req.params);
     const results = await client.query(
-      'SELECT teachers.firstname , courses.name FROM teachers_courses JOIN teachers ON teachers_courses.teacher_id = teachers.id JOIN courses ON teachers_courses.course_id = courses.id; '
+      'SELECT teachers.firstname , courses.* FROM teachers_courses JOIN teachers ON teachers_courses.teacher_id = teachers.id JOIN courses ON teachers_courses.course_id = courses.id WHERE teachers.id=$1; ',
+      [req.params.id]
     );
     res.json(results.rows);
   } catch (err) {
