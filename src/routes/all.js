@@ -7,7 +7,7 @@ router.get('/students', getAllStudents);
 
 async function getAllTeachers(req, res, next) {
   try {
-    let results = await client.query(`SELECT * FROM teachers ORDER BY name;`);
+    let results = await client.query(`SELECT * FROM teachers;`);
     res.send(results.rows);
   } catch (error) {
     next(error);
@@ -15,7 +15,7 @@ async function getAllTeachers(req, res, next) {
 }
 async function getAllStudents(req, res, next) {
   try {
-    let results = await client.query(`SELECT * FROM students ORDER BY name;`);
+    let results = await client.query(`SELECT * FROM students;`);
     res.send(results.rows);
   } catch (error) {
     next(error);
