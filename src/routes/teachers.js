@@ -3,7 +3,7 @@ const server = require('../server');
 const router = express.Router();
 const client = require('../db');
 
-router.get('/profile', profileHandler);
+router.get('/profile/:id', profileHandler);
 router.patch('/profile/:id', updateProfileHandler);
 router.get('/courses', getAllCourses);
 router.get('/courses/:id', courseHandler);
@@ -13,10 +13,11 @@ router.delete('/courses/:id', deleteCourses);
 async function profileHandler(req, res, next) {
   try {
     const results = await client.query(
-      'SELECT teachers.*, auth.role FROM teachers JOIN auth ON teachers.auth_id = auth.id;'
+      'SELECT teachers.*, auth.role FROM teachers JOIN auth ON teachers.auth_id = auth.id WHERE teachers.id=$1;',
+      [req.params.id]
     );
     // res.json(results.rows);
-    res.send(results.rows[0])
+    res.send(results.rows[0]);
     // res.render('pages/teacherProfile', { element: results.rows[0] });
   } catch (err) {
     next(err);

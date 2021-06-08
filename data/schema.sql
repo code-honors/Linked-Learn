@@ -45,12 +45,12 @@ CREATE TABLE IF NOT EXISTS  teachers(
     auth_id INT REFERENCES auth(id) 
 );
 
-INSERT INTO teachers (firstname, lastname, auth_id) values ('ruba', 'banat', 2) RETURNING *;
-INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('ahmad', 'frijat','https://avatars.githubusercontent.com/u/75928390?v=4', 4) RETURNING *;
-INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('lina', 'alasfar','https://images.pexels.com/photos/3772711/pexels-photo-3772711.jpeg?cs=srgb&dl=pexels-andrea-piacquadio-3772711.jpg&fm=jpg', 5) RETURNING *;
-INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('mohammad', 'alahmar','https://www.google.jo/url?sa=i&url=http%3A%2F%2Fwww.cadmact.com%2F2018%2F10%2F10%2Fadvance-level-spasticity-workshop%2F&psig=AOvVaw1qjJ80VML53bfMHJCrGvha&ust=1623233549119000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCNjC-avmh_ECFQAAAAAdAAAAABAD', 6) RETURNING *;
-INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('issa', 'josef','https://www.google.jo/url?sa=i&url=https%3A%2F%2Fjm.linkedin.com%2Fin%2Fjosephissa&psig=AOvVaw1DbfycES7--dHEi7JNQKxd&ust=1623233496236000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCMid0Zjmh_ECFQAAAAAdAAAAABAD', 7) RETURNING *;
-INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('linda', 'mailss','https://academist.qodeinteractive.com/wp-content/uploads/2018/06/educator-img-3.jpg', 8) RETURNING *;
+INSERT INTO teachers (firstname, lastname, auth_id) values ('Ruba', 'Banat', 2) RETURNING *;
+INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('Ahmad', 'Frijat','https://avatars.githubusercontent.com/u/75928390?v=4', 4) RETURNING *;
+INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('Lina', 'Alasfar','https://images.pexels.com/photos/3772711/pexels-photo-3772711.jpeg?cs=srgb&dl=pexels-andrea-piacquadio-3772711.jpg&fm=jpg', 5) RETURNING *;
+-- INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('mohammad', 'alahmar','https://www.google.jo/url?sa=i&url=http%3A%2F%2Fwww.cadmact.com%2F2018%2F10%2F10%2Fadvance-level-spasticity-workshop%2F&psig=AOvVaw1qjJ80VML53bfMHJCrGvha&ust=1623233549119000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCNjC-avmh_ECFQAAAAAdAAAAABAD', 6) RETURNING *;
+INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('Issa', 'Josef','https://www.google.jo/url?sa=i&url=https%3A%2F%2Fjm.linkedin.com%2Fin%2Fjosephissa&psig=AOvVaw1DbfycES7--dHEi7JNQKxd&ust=1623233496236000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCMid0Zjmh_ECFQAAAAAdAAAAABAD', 7) RETURNING *;
+INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('Linda', 'Mailss','https://academist.qodeinteractive.com/wp-content/uploads/2018/06/educator-img-3.jpg', 8) RETURNING *;
 SELECT teachers.firstname, auth.role FROM teachers JOIN auth ON teachers.auth_id = auth.id;
 
 DROP TABLE IF EXISTS courses CASCADE;
