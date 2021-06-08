@@ -7,10 +7,15 @@ require('dotenv').config();
 const methodOverride = require('method-override');
 const path = require('path');
 const http = require('http');
-const socketio = require('socket.io');
 const app = express();
 const server = http.createServer(app);
-const io = socketio(server);
+const io = require('socket.io')(server,{
+  cors : {
+      origin : 'http://localhost:3000',
+      methoud:['POST','GET']
+  }
+})
+
 
 
 const studentRoutes = require('./routes/students.js');
@@ -21,12 +26,7 @@ const authRoutes = require('./auth/routes.js');
 const notFoundHandler = require('./error-handlers/404.js');
 const errorHandler = require('./error-handlers/500.js');
 const formatMessage = require('./utils/messages');
-const {
-  userJoin,
-  getCurrentUser,
-  userLeave,
-  getRoomUsers,
-} = require('./utils/users');
+
 
 app.use(cors());
 app.use(morgan('dev'));
@@ -40,56 +40,72 @@ app.use(express.urlencoded({ extended: true }));
 ////////////////// chat ///////////////////////
 
 const botName = 'Chat starts';
+const users = [];
+
+const addUser = ({ id, name, room }) => {
+  name = name.trim().toLowerCase();
+  room = room.trim().toLowerCase();
+
+  const existingUser = users.find((user) => user.room === room && user.name === name);
+
+  if(!name || !room) return { error: 'Username and room are required.' };
+  if(existingUser) return { error: 'Username is taken.' };
+
+  const user = { id, name, room };
+
+  users.push(user);
+
+  return { user };
+}
+
+const removeUser = (id) => {
+  const index = users.findIndex((user) => user.id === id);
+
+  if(index !== -1) return users.splice(index, 1)[0];
+}
+
+const getUser = (id) => users.find((user) => user.id === id);
+
+const getUsersInRoom = (room) => users.filter((user) => user.room === room);
+
 
 // Run when client connects
 io.on('connection', (socket) => {
-  socket.on('joinRoom', ({ username, room }) => {
-    const user = userJoin(socket.id, username, room);
+  socket.on('join', ({ name, room }, callback) => {
+    const { error, user } = addUser({ id: socket.id, name, room });
+
+    if(error) return callback(error);
 
     socket.join(user.room);
 
-    // Welcome current user
-    socket.emit('message', formatMessage(botName, 'Welcome !'));
+    socket.emit('message', { user: 'admin', text: `${user.name}, welcome to ${user.room}.`});
+    socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has joined!` });
 
-    // Broadcast when a user connects
-    socket.broadcast
-      .to(user.room)
-      .emit(
-        'message',
-        formatMessage(botName, `${user.username} has joined the chat`)
-      );
+    io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
 
-    // Send users and room info
-    io.to(user.room).emit('roomUsers', {
-      room: user.room,
-      users: getRoomUsers(user.room),
-    });
+    callback();
   });
 
-  // Listen for chatMessage
-  socket.on('chatMessage', (msg) => {
-    const user = getCurrentUser(socket.id);
 
-    io.to(user.room).emit('message', formatMessage(user.username, msg));
+
+  // Listen for chatMessage
+  socket.on('sendMessage', (message, callback) => {
+    const user = getUser(socket.id);
+
+    io.to(user.room).emit('message', { user: user.name, text: message });
+
+    callback();
   });
 
   // Runs when client disconnects
   socket.on('disconnect', () => {
-    const user = userLeave(socket.id);
+    const user = removeUser(socket.id);
 
-    if (user) {
-      io.to(user.room).emit(
-        'message',
-        formatMessage(botName, `${user.username} has left the chat`)
-      );
-
-      // Send users and room info
-      io.to(user.room).emit('roomUsers', {
-        room: user.room,
-        users: getRoomUsers(user.room),
-      });
+    if(user) {
+      io.to(user.room).emit('message', { user: 'Admin', text: `${user.name} has left.` });
+      io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)});
     }
-  });
+  })
 });
 
 //////////////////////////////////////////
