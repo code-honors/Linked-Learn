@@ -13,6 +13,11 @@ CREATE TABLE IF NOT EXISTS auth(
 INSERT INTO auth (username, password, email, role) values ('afnan', '$2b$10$bU2t0RLijsvFs6hdfCDqT.HSFXCw2i.cjvILr6.mVxvn3Q587Rz8e', 'afnan@gm.com', 'admin') RETURNING *;
 INSERT INTO auth (username, password, email, role) values ('ruba', '$2b$10$bU2t0RLijsvFs6hdfCDqT.HSFXCw2i.cjvILr6.mVxvn3Q587Rz8e', 'ruba@gm.com', 'teacher') RETURNING *;
 INSERT INTO auth (username, password, email, role) values ('zaid', '$2b$10$bU2t0RLijsvFs6hdfCDqT.HSFXCw2i.cjvILr6.mVxvn3Q587Rz8e', 'zaid@gm.com', 'student') RETURNING *;
+INSERT INTO auth (username, password, email, role) values ('ahmad', '$2b$10$bU2t0RLijsvFs6hdfCDqT.HSFXCw2i.cjvILr6.mVxvn3Q587Rz8e', 'ahmad@gm.com', 'teacher') RETURNING *;
+INSERT INTO auth (username, password, email, role) values ('lina', '$2b$10$bU2t0RLijsvFs6hdfCDqT.HSFXCw2i.cjvILr6.mVxvn3Q587Rz8e', 'lina@gm.com', 'teacher') RETURNING *;
+INSERT INTO auth (username, password, email, role) values ('mohammad', '$2b$10$bU2t0RLijsvFs6hdfCDqT.HSFXCw2i.cjvILr6.mVxvn3Q587Rz8e', 'moh@gm.com', 'teacher') RETURNING *;
+INSERT INTO auth (username, password, email, role) values ('issa', '$2b$10$bU2t0RLijsvFs6hdfCDqT.HSFXCw2i.cjvILr6.mVxvn3Q587Rz8e', 'issa@gm.com', 'teacher') RETURNING *;
+INSERT INTO auth (username, password, email, role) values ('linda', '$2b$10$bU2t0RLijsvFs6hdfCDqT.HSFXCw2i.cjvILr6.mVxvn3Q587Rz8e', 'linda@gm.com', 'teacher') RETURNING *;
 SELECT * FROM auth;
 DROP TABLE IF EXISTS students CASCADE;
 
@@ -41,6 +46,11 @@ CREATE TABLE IF NOT EXISTS  teachers(
 );
 
 INSERT INTO teachers (firstname, lastname, auth_id) values ('ruba', 'banat', 2) RETURNING *;
+INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('ahmad', 'frijat','https://avatars.githubusercontent.com/u/75928390?v=4', 4) RETURNING *;
+INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('lina', 'alasfar','https://images.pexels.com/photos/3772711/pexels-photo-3772711.jpeg?cs=srgb&dl=pexels-andrea-piacquadio-3772711.jpg&fm=jpg', 5) RETURNING *;
+INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('mohammad', 'alahmar','https://www.google.jo/url?sa=i&url=http%3A%2F%2Fwww.cadmact.com%2F2018%2F10%2F10%2Fadvance-level-spasticity-workshop%2F&psig=AOvVaw1qjJ80VML53bfMHJCrGvha&ust=1623233549119000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCNjC-avmh_ECFQAAAAAdAAAAABAD', 6) RETURNING *;
+INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('issa', 'josef','https://www.google.jo/url?sa=i&url=https%3A%2F%2Fjm.linkedin.com%2Fin%2Fjosephissa&psig=AOvVaw1DbfycES7--dHEi7JNQKxd&ust=1623233496236000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCMid0Zjmh_ECFQAAAAAdAAAAABAD', 7) RETURNING *;
+INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('linda', 'mailss','https://academist.qodeinteractive.com/wp-content/uploads/2018/06/educator-img-3.jpg', 8) RETURNING *;
 SELECT teachers.firstname, auth.role FROM teachers JOIN auth ON teachers.auth_id = auth.id;
 
 DROP TABLE IF EXISTS courses CASCADE;
