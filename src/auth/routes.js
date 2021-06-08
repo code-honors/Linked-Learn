@@ -102,6 +102,7 @@ function signinFunction(req, res, next) {
     user: req.user,
     token: generateToken(req.user.username),
   };
+  console.log(user);
   res.status(200).json(user);
   next();
 }

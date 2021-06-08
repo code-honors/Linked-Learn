@@ -16,6 +16,7 @@ const io = socketio(server);
 const studentRoutes = require('./routes/students.js');
 const teacherRoutes = require('./routes/teachers.js');
 const coursesRoutes = require('./routes/courses.js');
+const allRoutes = require('./routes/all.js');
 const authRoutes = require('./auth/routes.js');
 const notFoundHandler = require('./error-handlers/404.js');
 const errorHandler = require('./error-handlers/500.js');
@@ -106,6 +107,7 @@ app.get('/home', (req, res) => {
 });
 
 app.use('/auth', authRoutes);
+app.use('/all', allRoutes);
 app.use('/courses', coursesRoutes);
 app.use('/student', studentRoutes);
 app.use('/teacher', teacherRoutes);
