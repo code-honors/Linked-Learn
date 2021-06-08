@@ -46,10 +46,10 @@ CREATE TABLE IF NOT EXISTS  teachers(
 );
 
 INSERT INTO teachers (firstname, lastname, auth_id) values ('Ruba', 'Banat', 2) RETURNING *;
-INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('Ahmad', 'Frijat','https://avatars.githubusercontent.com/u/75928390?v=4', 4) RETURNING *;
+-- INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('Ahmad', 'Frijat','https://avatars.githubusercontent.com/u/75928390?v=4', 4) RETURNING *;
 INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('Lina', 'Alasfar','https://images.pexels.com/photos/3772711/pexels-photo-3772711.jpeg?cs=srgb&dl=pexels-andrea-piacquadio-3772711.jpg&fm=jpg', 5) RETURNING *;
--- INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('mohammad', 'alahmar','https://www.google.jo/url?sa=i&url=http%3A%2F%2Fwww.cadmact.com%2F2018%2F10%2F10%2Fadvance-level-spasticity-workshop%2F&psig=AOvVaw1qjJ80VML53bfMHJCrGvha&ust=1623233549119000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCNjC-avmh_ECFQAAAAAdAAAAABAD', 6) RETURNING *;
-INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('Issa', 'Josef','https://www.google.jo/url?sa=i&url=https%3A%2F%2Fjm.linkedin.com%2Fin%2Fjosephissa&psig=AOvVaw1DbfycES7--dHEi7JNQKxd&ust=1623233496236000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCMid0Zjmh_ECFQAAAAAdAAAAABAD', 7) RETURNING *;
+INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('mohammad', 'ahmad','https://www.google.jo/url?sa=i&url=https%3A%2F%2Ftwitter.com%2Fl_haddad&psig=AOvVaw3sPu7wBbgjRW1XTotSLwtV&ust=1623257302592000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCIiVmeq-iPECFQAAAAAdAAAAABAI', 6) RETURNING *;
+INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('Issa', 'Josef','https://www.google.jo/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FFernando_Haddad&psig=AOvVaw3sPu7wBbgjRW1XTotSLwtV&ust=1623257302592000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCIiVmeq-iPECFQAAAAAdAAAAABAD', 7) RETURNING *;
 INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('Linda', 'Mailss','https://academist.qodeinteractive.com/wp-content/uploads/2018/06/educator-img-3.jpg', 8) RETURNING *;
 SELECT teachers.firstname, auth.role FROM teachers JOIN auth ON teachers.auth_id = auth.id;
 
@@ -92,6 +92,7 @@ CREATE TABLE IF NOT EXISTS  teachers_courses(
 
 INSERT INTO teachers_courses (teacher_id, course_id) values (1, 2) RETURNING *;
 INSERT INTO teachers_courses (teacher_id, course_id) values (1, 3) RETURNING *;
+INSERT INTO teachers_courses (teacher_id, course_id) values (2, 1) RETURNING *;
 SELECT * FROM teachers_courses JOIN teachers ON teachers_courses.teacher_id = teachers.id JOIN courses ON teachers_courses.course_id = courses.id;
 
 DROP TABLE IF EXISTS course_comments;
