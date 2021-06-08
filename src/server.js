@@ -130,4 +130,3 @@ module.exports = {
     const PORT = port || 8080;
     server.listen(PORT, () => console.log(`Server Up on ${PORT}`));
   },
-};

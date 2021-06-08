@@ -48,8 +48,8 @@ CREATE TABLE IF NOT EXISTS  teachers(
 INSERT INTO teachers (firstname, lastname, auth_id) values ('Ruba', 'Banat', 2) RETURNING *;
 -- INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('Ahmad', 'Frijat','https://avatars.githubusercontent.com/u/75928390?v=4', 4) RETURNING *;
 INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('Lina', 'Alasfar','https://images.pexels.com/photos/3772711/pexels-photo-3772711.jpeg?cs=srgb&dl=pexels-andrea-piacquadio-3772711.jpg&fm=jpg', 5) RETURNING *;
-INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('mohammad', 'ahmad','https://pbs.twimg.com/profile_images/1017809554153836544/juyy5-2Y_400x400.jpg', 6) RETURNING *;
-INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('Issa', 'Josef','https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Haddad_em_campanha_2018_%28cropped%29.jpg/800px-Haddad_em_campanha_2018_%28cropped%29.jpg', 7) RETURNING *;
+INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('Mohammad', 'Ahmad','https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Haddad_em_campanha_2018_%28cropped%29.jpg/800px-Haddad_em_campanha_2018_%28cropped%29.jpg', 6) RETURNING *;
+INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('Issa', 'Josef','https://pbs.twimg.com/profile_images/1017809554153836544/juyy5-2Y_400x400.jpg', 7) RETURNING *;
 INSERT INTO teachers (firstname, lastname, profilepic, auth_id) values ('Linda', 'Mailss','https://academist.qodeinteractive.com/wp-content/uploads/2018/06/educator-img-3.jpg', 8) RETURNING *;
 SELECT teachers.firstname, auth.role FROM teachers JOIN auth ON teachers.auth_id = auth.id;
 
@@ -58,16 +58,16 @@ DROP TABLE IF EXISTS courses CASCADE;
 CREATE TABLE IF NOT EXISTS  courses(
     id SERIAL PRIMARY KEY ,
     name VARCHAR (255) NOT NULL,
-    img VARCHAR (255) DEFAULT 'https://pc-tablet.com/wp-content/uploads/2020/11/stock-online-course.png',
+    img VARCHAR (255) DEFAULT 'https://academist.qodeinteractive.com/wp-content/uploads/2018/07/courses-3.jpg',
     category VARCHAR(255),
     description TEXT ,
     classes TEXT
 );
 
 
-INSERT INTO courses (name,description,category,classes) values ('Cal','asddqweqweqwe','math', 'Class 1:');
-INSERT INTO courses (name,description,category,classes) values ('401','asddqweqweqwe','code', 'Class 1:');
-INSERT INTO courses (name,description,category,classes) values ('301','asddqweqweqwe','code', 'Class 1:');
+INSERT INTO courses (name,description,category,classes) values ('Cal','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris . Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','math', 'Class 1:');
+INSERT INTO courses (name,description,category,classes) values ('401','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris . Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','code', 'Class 1:');
+INSERT INTO courses (name,description,category,classes) values ('301','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris . Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','code', 'Class 1:');
 
 
 DROP TABLE IF EXISTS students_courses;
